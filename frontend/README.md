@@ -1,9 +1,8 @@
-# React + Vite
-
-
-TO RUN:
+## VN ANGLER
+**VITE + REACT + JS**
+Required: npm
+To run:
 cd frontend
 npm install
-npm run dev
-
+npm rundev
 
