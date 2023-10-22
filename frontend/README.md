@@ -1,8 +1,8 @@
 ## VN ANGLER
 **VITE + REACT + JS**
 Required: npm
-To run:
-cd frontend
-npm install
-npm rundev
+To run: <br />
+cd frontend <br />
+npm install <br />
+npm rundev <br />
 
