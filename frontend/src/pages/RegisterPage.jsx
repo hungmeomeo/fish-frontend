@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
   
@@ -6,6 +7,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,16 +31,17 @@ export default function RegisterPage() {
       .then((data) => {
         // Handle the response from the API, e.g., display a success message or handle errors.
         console.log('Registration Response:', data);
+        
       })
       .catch((error) => {
         // Handle any network errors or request failures
         console.error('Error:', error);
       });
+    navigate('/login');
   };
 
   return (
     <>
-
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           {/* <img

@@ -1,15 +1,52 @@
+import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    // Create a JSON object with the login data
+    const loginData = {
+      email: email,
+      password: password,
+    };
+  
+    try {
+      const response = await fetch('https://fish-demo.onrender.com/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
+  
+      if (response.ok) {
+        // The login was successful; parse the response data
+        const data = await response.json();
+  
+        // Store the token in a secure way for future authenticated requests
+        // For example, you can use a state management library like Redux, or the browser's localStorage.
+        // For simplicity, let's store it in localStorage in this example.
+        localStorage.setItem('authToken', data.token);
+        console.log('Login Response:', data);
+        // Redirect to the dashboard or another protected page
+        navigate('/');
+      } else {
+        // Handle unsuccessful login (e.g., wrong credentials)
+        console.error('Login failed');
+      }
+    } catch (error) {
+      // Handle network errors or request failures
+      console.error('Error:', error);
+    }
+  };
+  
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           {/* <img
@@ -23,7 +60,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -34,6 +71,8 @@ export default function LoginPage() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -57,6 +96,8 @@ export default function LoginPage() {
                   name="password"
                   type="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
