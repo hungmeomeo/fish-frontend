@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -20,24 +19,23 @@ export default function RegisterPage() {
     };
 
     // Send a POST request to the API
-    fetch('https://fish-demo.onrender.com/auth/register', {
-      method: 'POST',
+    fetch("https://fish-demo.onrender.com/auth/register", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(registrationData),
     })
       .then((response) => response.json())
       .then((data) => {
         // Handle the response from the API, e.g., display a success message or handle errors.
-        console.log('Registration Response:', data);
-        
+        console.log("Registration Response:", data);
       })
       .catch((error) => {
         // Handle any network errors or request failures
-        console.error('Error:', error);
+        console.error("Error:", error);
       });
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -57,7 +55,10 @@ export default function RegisterPage() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 First Name
               </label>
               <div className="mt-2">
@@ -72,7 +73,10 @@ export default function RegisterPage() {
               </div>
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Last Name
               </label>
               <div className="mt-2">
@@ -87,7 +91,10 @@ export default function RegisterPage() {
               </div>
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
@@ -105,7 +112,10 @@ export default function RegisterPage() {
             </div>
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
               </div>
@@ -129,9 +139,9 @@ export default function RegisterPage() {
                 Sign up
               </button>
             </div>
-          </form>        
+          </form>
         </div>
       </div>
     </>
-  )
+  );
 }

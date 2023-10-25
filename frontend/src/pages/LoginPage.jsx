@@ -1,50 +1,61 @@
-import React, { useState } from 'react'
+
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    let token = sessionStorage.getItem("authToken");
+    if (token) {
+      navigate("/");
+    }
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Create a JSON object with the login data
     const loginData = {
       email: email,
       password: password,
     };
-  
+
     try {
-      const response = await fetch('https://fish-demo.onrender.com/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
-      });
-  
+      const response = await fetch(
+        "https://fish-demo.onrender.com/auth/login",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginData),
+        }
+      );
+
       if (response.ok) {
-        // The login was successful; parse the response data
+        // // The login was successful; parse the response data
         const data = await response.json();
-  
+        console.log(data);
+        
         // Store the token in a secure way for future authenticated requests
-        // For example, you can use a state management library like Redux, or the browser's localStorage.
-        // For simplicity, let's store it in localStorage in this example.
-        localStorage.setItem('authToken', data.token);
-        console.log('Login Response:', data);
+        sessionStorage.setItem("authToken", data.token);
+
         // Redirect to the dashboard or another protected page
-        navigate('/');
+        navigate("/");
       } else {
         // Handle unsuccessful login (e.g., wrong credentials)
-        console.error('Login failed');
+        console.error("Login failed");
       }
     } catch (error) {
       // Handle network errors or request failures
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
-  
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -62,7 +73,10 @@ export default function LoginPage() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
@@ -81,11 +95,17 @@ export default function LoginPage() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <a
+                    href="#"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
                     Forgot password?
                   </a>
                 </div>
@@ -114,13 +134,16 @@ export default function LoginPage() {
             </div>
           </form>
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{' '}
-            <a href="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            Not a member?{" "}
+            <a
+              href="/register"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
               Sign up now!
             </a>
           </p>
         </div>
       </div>
     </>
-  )
+  );
 }
