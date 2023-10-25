@@ -6,21 +6,21 @@ function LogoutButton() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      // Send a POST request to a logout API endpoint
+      // Send a POST request to the logout API endpoint with the correct Authorization header
       const response = await fetch('https://fish-demo.onrender.com/auth/logout', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Ensure 'authToken' is correctly stored in localStorage
+          'Content-Type': 'application/json', // You can add this header as well
         },
       });
 
       if (response.ok) {
-        // The logout was successful; remove the token from storage
+        // The logout was successful; clear the token and redirect to the login page
         localStorage.removeItem('authToken');
         console.log('Logout Response:', response);
-        // Redirect to the page
-        // navigate('/');
       } else {
+        // Handle logout failure
         console.error('Logout failed');
       }
     } catch (error) {
