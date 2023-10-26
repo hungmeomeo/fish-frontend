@@ -1,4 +1,4 @@
-import axios from "axios";
+import jwtDecode from "jwt-decode";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +38,7 @@ export default function LoginPage() {
       if (response.ok) {
         // // The login was successful; parse the response data
         const data = await response.json();
-        console.log(data);
+        console.log(data.first_name);
         // // Store the token in a secure way for future authenticated requests
         // // For example, you can use a state management library like Redux, or the browser's localStorage.
         // // For simplicity, let's store it in localStorage in this example.
