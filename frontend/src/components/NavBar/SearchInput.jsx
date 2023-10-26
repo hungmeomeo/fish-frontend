@@ -9,7 +9,7 @@ const SearchInput = () => {
       <FontAwesomeIcon icon={faSearch} className="text-[#F91944] ml-[10px]" />
       <input
         type="text"
-        placeholder="Search for recipes"
+        placeholder="Search for gadgets"
         className="outline-none mx-2 w-full"
       />
     </div>
