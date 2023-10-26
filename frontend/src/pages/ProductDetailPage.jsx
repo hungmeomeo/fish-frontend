@@ -7,10 +7,11 @@ import React, { useState } from 'react'
 import CardOutLook from '../components/CardEdited/CardOutlook';
 import CardBody from '../components/CardEdited/CardBody';
 import CardHead from '../components/CardEdited/CardHead';
+import { useParams } from 'react-router-dom';
 
 function ProductDetailPage() {
     const [color, setColor] = useState('');
-
+    const { productid } = useParams();
     const handleColor = (event) => {
         setColor(event.target.value);
     };
@@ -82,16 +83,16 @@ function ProductDetailPage() {
                                 ADD TO CART
                             </Button>
                         </Box>
-                        
+
                     </CardBody>
                 </CardOutLook>
-                <Divider sx = {{marginLeft: 4}} variant="string" />
-                <Box sx = {{display: 'flex', flexDirection: 'row', marginLeft: 4, marginTop: 2}}>
-                    <Typography variant='body1' sx = {{fontWeight: 'bold'}}>
-                            Share:
+                <Divider sx={{ marginLeft: 4 }} variant="string" />
+                <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: 4, marginTop: 2 }}>
+                    <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
+                        Share:
                     </Typography>
-                    <TwitterIcon sx ={{ marginRight: 2, marginLeft: 2}}/>
-                    <InstagramIcon sx ={{ marginRight: 2 }} />
+                    <TwitterIcon sx={{ marginRight: 2, marginLeft: 2 }} />
+                    <InstagramIcon sx={{ marginRight: 2 }} />
                     <FacebookIcon />
                 </Box>
             </Grid>
