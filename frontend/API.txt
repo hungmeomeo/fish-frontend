@@ -1,0 +1,10 @@
+https://fish-demo.onrender.com/auth/login
+https://fish-demo.onrender.com/auth/logout
+https://fish-demo.onrender.com/auth/register
+
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "minhbeo@example.com",
+  "password": "password123"
+}
