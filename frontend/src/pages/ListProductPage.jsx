@@ -125,7 +125,7 @@ function ListProductPage() {
                                     </Box>
                                 </CardContent>
                                 <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}   >
-                                    <Button onClick={() => handleView(product.id)}>
+                                    <Button variant='contained' onClick={() => handleView(product.id)}>
                                         View
                                     </Button>
 
