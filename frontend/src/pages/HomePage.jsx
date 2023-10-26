@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton";
-import axios from "axios";
+
 
 const HomePage = () => {
   const navigate = useNavigate();

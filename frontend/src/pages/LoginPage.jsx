@@ -13,6 +13,7 @@ export default function LoginPage() {
       navigate("/");
     }
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,12 +39,12 @@ export default function LoginPage() {
       if (response.ok) {
         // // The login was successful; parse the response data
         const data = await response.json();
-        console.log(data.first_name);
+        console.log(data);
         // // Store the token in a secure way for future authenticated requests
         // // For example, you can use a state management library like Redux, or the browser's localStorage.
         // // For simplicity, let's store it in localStorage in this example.
         sessionStorage.setItem("authToken", data.token);
-        //console.log("JWT Token:", localStorage.getItem("jwt"));
+
         // Redirect to the dashboard or another protected page
         navigate("/");
       } else {

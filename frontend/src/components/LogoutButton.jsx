@@ -21,7 +21,8 @@ function LogoutButton() {
       if (response.ok) {
         // The logout was successful; remove the token from storage
         sessionStorage.removeItem("authToken");
-        // console.log("Logout Response:", response);
+        console.log("Logout Response:", response);
+
         // Redirect to the home page after successful logout
         navigate("/login");
       } else {
