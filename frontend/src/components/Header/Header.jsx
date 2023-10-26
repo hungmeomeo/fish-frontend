@@ -39,7 +39,7 @@ const Header = () => {
 
         <MDBNavbarToggler
           aria-controls='navbarSupportedContent'
-          aria-expanded='false'
+          aria-expanded='true'
           aria-label='Toggle navigation'
           onClick={() => setShowBasic(!showBasic)}
         >
@@ -47,42 +47,46 @@ const Header = () => {
         </MDBNavbarToggler>
 
         <MDBCollapse navbar show={showBasic}>
-          <MDBNavbarNav color="light" className='mr-auto mb-2 mb-lg-0 d-flex justify-content-center fw-bold'>
+          <MDBNavbarNav color="light" className='mr-auto mb-2 mb-lg-0 d-flex justify-content-end fw-bold'>
 
-            <MDBNavbarItem >
+            <MDBNavbarItem className='me-2'>
               <MDBDropdown className='shadow-0'>
                 <MDBDropdownToggle color="light" className='fs-6 fw-bold'>
                   Shop
                 </MDBDropdownToggle>
 
-                <MDBDropdownMenu>
+                <MDBDropdownMenu >
 
-                  <MDBDropdownItem link  className='fs-6'>SALE ITEMS</MDBDropdownItem>
-                  <MDBDropdownItem link  className='fs-6'>APPAREL</MDBDropdownItem>
+                  <MDBDropdownItem link className='fs-6'>SALE ITEMS</MDBDropdownItem>
+                  <MDBDropdownItem link className='fs-6'>APPAREL</MDBDropdownItem>
 
+                  <MDBDropdownItem>
+                    <MDBDropdown dropright group className='shadow-0'>
+                      <MDBDropdownToggle color="light" className='fs-6'>
+                        Rod and Reels
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                        <MDBDropdownItem  link>Fly Rods</MDBDropdownItem>
+                        <MDBDropdownItem  link>Fly Reels</MDBDropdownItem>
+                        <MDBDropdownItem  link>Fly Fishing Combos</MDBDropdownItem>
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                  </MDBDropdownItem>
                   
-                  <MDBDropdown dropright group className='shadow-0'>
-                    <MDBDropdownToggle color="light" className='fs-6'>
-                      Rod and Reels
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu>
-                      <MDBDropdownItem  link>Fly Rods</MDBDropdownItem>
-                      <MDBDropdownItem  link>Fly Reels</MDBDropdownItem>
-                      <MDBDropdownItem  link>Fly Fishing Combos</MDBDropdownItem>
-                    </MDBDropdownMenu>
-                  </MDBDropdown>
                   
                   
-
-                  <MDBDropdown dropright group className='shadow-0'>
-                    <MDBDropdownToggle color='light' className='fs-6'>
-                      Flies
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu>
-                      <MDBDropdownItem  link>Freshwater Flies</MDBDropdownItem>
-                      <MDBDropdownItem  link>Saltwater Flies</MDBDropdownItem>  
-                    </MDBDropdownMenu>
-                  </MDBDropdown>
+                  <MDBDropdownItem>
+                    <MDBDropdown dropright group className='shadow-0'>
+                      <MDBDropdownToggle color='light' className='fs-6'>
+                        Flies
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                        <MDBDropdownItem  link>Freshwater Flies</MDBDropdownItem>
+                        <MDBDropdownItem  link>Saltwater Flies</MDBDropdownItem>  
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                  </MDBDropdownItem>
+                  
                   
 
                   <MDBDropdownItem link className='fs-6'>FLY LINES</MDBDropdownItem>
@@ -91,11 +95,11 @@ const Header = () => {
               </MDBDropdown>
             </MDBNavbarItem>
 
-            <MDBNavbarItem>
+            <MDBNavbarItem className='me-4'>
               <MDBNavbarLink className='fs-6' to = "/about">ABOUT US</MDBNavbarLink>
             </MDBNavbarItem>
 
-            <MDBNavbarItem>
+            <MDBNavbarItem className='me-2'>
               <MDBNavbarLink to="/user">
                 <span>
                   <MDBIcon fas icon='user'></MDBIcon>
@@ -103,7 +107,7 @@ const Header = () => {
               </MDBNavbarLink>
             </MDBNavbarItem>
 
-            <MDBNavbarItem>
+            <MDBNavbarItem className='me-2'>
               <MDBNavbarLink to="/cart">
                 <span>
                   <MDBIcon fas icon='shopping-cart'></MDBIcon>
