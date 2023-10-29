@@ -21,7 +21,7 @@ const HomePage = () => {
                 </p>
             </div>
             <div style={{ backgroundImage: "url('src/assets/img/fishWall.jpg')", backgroundRepeat: "no-repeat ", backgroundSize: "100% 800px" }} className=" w-full h-[800px] text-center text-white font-bold">
-                <div className='pt-25'></div>
+                <div className='h-[25px] pt-25'></div>
                 <h1 className='text-[60px]'>SHOP OUR REEL COLLECTION</h1>
                 <p>YOUR FAVOURITE BRANDS IN ONE STORE</p>
             </div>
