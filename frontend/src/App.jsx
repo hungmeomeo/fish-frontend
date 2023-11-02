@@ -7,6 +7,8 @@ import RegisterPage from "./pages/RegisterPage";
 import ListProductPage from "./pages/ListProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
+import ShippingCost from "./pages/ShippingCost";
+import Guarantee from "./pages/Guarantee";
 function App() {
   const [isLoading] = useState(false);
   return (
@@ -18,6 +20,9 @@ function App() {
         <Route path="/products" element={<ListProductPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/shipping-cost" element={<ShippingCost />} />
+        <Route path="/guarantee" element={<Guarantee />} />
+        
         {/* Add another pages here */}
       </Routes >
     </Router >
