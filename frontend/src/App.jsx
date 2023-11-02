@@ -7,8 +7,10 @@ import RegisterPage from "./pages/RegisterPage";
 import ListProductPage from "./pages/ListProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
+import UserCartPage from "./pages/UserCartPage";
+
 function App() {
-  const [isLoading] = useState(false);
+  // const [isLoading] = useState(false);
   return (
     <Router>
       <Routes>
@@ -18,6 +20,7 @@ function App() {
         <Route path="/products" element={<ListProductPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/user-cart" element={<UserCartPage />} />
         {/* Add another pages here */}
       </Routes >
     </Router >

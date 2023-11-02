@@ -42,7 +42,7 @@ export default function TestNav() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-24" src= {logoUrl} alt="" />
+            <img className="h-8 w-24" src={logoUrl} alt="" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -56,108 +56,108 @@ export default function TestNav() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-            <Popover className="relative">
+          <Popover className="relative">
+            <Popover.Button className="flex items-center gap-x-1 text-md font-semibold leading-6 text-gray-900">
+              Product
+              <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+            </Popover.Button>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-48 max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                <div className="p-4">
+                  {products.map((item) => (
+                    <div
+                      key={item.name}
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                    >
+                      {/* <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                                </div> */}
+                      <div className="flex-auto">
+                        <a href={item.href} className="block font-semibold text-gray-900">
+                          {item.name}
+                          <span className="absolute inset-0" />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+
+          <a href="#" className="text-md font-semibold leading-6 text-gray-900">
+            About us
+          </a>
+        </Popover.Group>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          {isAuth ?
+            (
+              <Popover className="relative">
                 <Popover.Button className="flex items-center gap-x-1 text-md font-semibold leading-6 text-gray-900">
-                    Product
-                    <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                  My Account
+                  <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                 </Popover.Button>
 
                 <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-200"
-                    enterFrom="opacity-0 translate-y-1"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in duration-150"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-1"
+                  as={Fragment}
+                  enter="transition ease-out duration-200"
+                  enterFrom="opacity-0 translate-y-1"
+                  enterTo="opacity-100 translate-y-0"
+                  leave="transition ease-in duration-150"
+                  leaveFrom="opacity-100 translate-y-0"
+                  leaveTo="opacity-0 translate-y-1"
                 >
-                <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-48 max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                  <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-48 max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                     <div className="p-4">
-                        {products.map((item) => (
-                            <div
-                            key={item.name}
-                            className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-                            >
-                                {/* <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                    <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
-                                </div> */}
-                                <div className="flex-auto">
-                                    <a href={item.href} className="block font-semibold text-gray-900">
-                                    {item.name}
-                                    <span className="absolute inset-0" />
-                                    </a>
-                                </div>
-                            </div>
-                        ))}
-                        
-                    </div>
-                </Popover.Panel>
-                </Transition>
-            </Popover>
-
-            <a href="#" className="text-md font-semibold leading-6 text-gray-900">
-                About us
-            </a>
-        </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {isAuth ? 
-                (
-                <Popover className="relative">
-                    <Popover.Button className="flex items-center gap-x-1 text-md font-semibold leading-6 text-gray-900">
-                        My Account
-                        <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                    </Popover.Button>
-
-                    <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="opacity-0 translate-y-1"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 translate-y-1"
-                    >
-                    <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-48 max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                        <div className="p-4">
-                            <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-                                <div className="flex-auto">
-                                    <a href="#" className="block font-semibold text-gray-900">
-                                        Order History
-                                        <span className="absolute inset-0" />
-                                    </a>                                
-                                </div>
-                            </div>
-                            <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-                                <div className="flex-auto">
-                                    {/* <a href="#" className="block font-semibold text-gray-900">
+                      <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+                        <div className="flex-auto">
+                          <a href="#" className="block font-semibold text-gray-900">
+                            Order History
+                            <span className="absolute inset-0" />
+                          </a>
+                        </div>
+                      </div>
+                      <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+                        <div className="flex-auto">
+                          {/* <a href="#" className="block font-semibold text-gray-900">
                                         Logout
                                         <span className="absolute inset-0" />
                                     </a>                                 */}
-                                    <LogoutButton />
-                                </div>
-                            </div>
+                          <LogoutButton />
                         </div>
-                    </Popover.Panel>
-                    </Transition>
-                </Popover>
-                ) : 
-                (
-                    <a href="#" className="text-md font-semibold leading-6 text-gray-900">
-                        Log in
-                    </a>
-                )
-            }
+                      </div>
+                    </div>
+                  </Popover.Panel>
+                </Transition>
+              </Popover>
+            ) :
+            (
+              <a href="#" className="text-md font-semibold leading-6 text-gray-900">
+                Log in
+              </a>
+            )
+          }
           <a href="#" className="text-md font-semibold leading-6 text-gray-900 px-8">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
             </svg>
           </a>
-          
+
         </div>
         <div className="hidden lg:flex lg:flex-1">
-            <SearchInput />
+          <SearchInput />
         </div>
-        
+
       </nav>
 
 
@@ -171,7 +171,7 @@ export default function TestNav() {
               <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
-               src= {logoUrl}
+                src={logoUrl}
                 alt=""
               />
             </a>
@@ -218,49 +218,49 @@ export default function TestNav() {
                 >
                   About us
                 </a>
-            </div>
-                <div className="py-4">
-                    {isAuth ? 
-                      (
-                        <Disclosure as="div" className="-mx-3">
-                          {({ open }) => (
-                            <>
-                              <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                My Account
-                                <ChevronDownIcon
-                                  className={classNames(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
-                                  aria-hidden="true"
-                                />
-                              </Disclosure.Button>
-                              <Disclosure.Panel className="mt-2 space-y-2">
-                                  <Disclosure.Button
-                                    href="#"
-                                    className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                  >
-                                    Order History
-                                  </Disclosure.Button>
-                                  <Disclosure.Button
-                                    href="#"
-                                    className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                  >
-                                    <LogoutButton />
-                                  </Disclosure.Button>
-                                
-                              </Disclosure.Panel>
-                            </>
-                          )}
-                        </Disclosure>
-                      ) : 
-                      (
-                        <a
-                        href="#"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                        >
-                        Log in
-                        </a>
-                      )
-                  }
-                </div>  
+              </div>
+              <div className="py-4">
+                {isAuth ?
+                  (
+                    <Disclosure as="div" className="-mx-3">
+                      {({ open }) => (
+                        <>
+                          <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                            My Account
+                            <ChevronDownIcon
+                              className={classNames(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
+                              aria-hidden="true"
+                            />
+                          </Disclosure.Button>
+                          <Disclosure.Panel className="mt-2 space-y-2">
+                            <Disclosure.Button
+                              href="#"
+                              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            >
+                              Order History
+                            </Disclosure.Button>
+                            <Disclosure.Button
+                              href="#"
+                              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            >
+                              <LogoutButton />
+                            </Disclosure.Button>
+
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  ) :
+                  (
+                    <a
+                      href="#"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      Log in
+                    </a>
+                  )
+                }
+              </div>
             </div>
           </div>
         </Dialog.Panel>
