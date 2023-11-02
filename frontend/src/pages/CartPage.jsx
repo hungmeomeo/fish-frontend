@@ -4,23 +4,23 @@ function CartPage() {
   const [cartItems, setCartItems] = useState([
     // ... your initial items here
     {
-        id: 1,
-        image:
-          'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-        name: 'Nike Air Max 2019',
-        size: '36EU - 4US',
-        price: 259.0,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        image:
-          'https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1131&q=80',
-        name: 'Nike Air Max 2020',
-        size: '37EU - 5US',
-        price: 299.0,
-        quantity: 1,
-      },
+      id: 1,
+      image:
+        'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+      name: 'Nike Air Max 2019',
+      size: '36EU - 4US',
+      price: 259.0,
+      quantity: 1,
+    },
+    {
+      id: 2,
+      image:
+        'https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1131&q=80',
+      name: 'Nike Air Max 2020',
+      size: '37EU - 5US',
+      price: 299.0,
+      quantity: 1,
+    },
   ]);
 
   const incrementQuantity = (item) => {
