@@ -9,6 +9,8 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import UserCartPage from "./pages/UserCartPage";
 
+import ShippingCost from "./pages/ShippingCost";
+import Guarantee from "./pages/Guarantee";
 function App() {
   // const [isLoading] = useState(false);
   return (
@@ -21,6 +23,9 @@ function App() {
         <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/user-cart" element={<UserCartPage />} />
+        <Route path="/shipping-cost" element={<ShippingCost />} />
+        <Route path="/guarantee" element={<Guarantee />} />
+
         {/* Add another pages here */}
       </Routes >
     </Router >

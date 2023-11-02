@@ -1,13 +1,13 @@
 // import React from 'react';
-import NavBar from '../components/NavBar/NavBar';
-import Footer from "../components/footer/Footer";
+// import Footer from "../components/footer/Footer";
+// import TestNav from "../components/NavBar/TestNav";
 import { Fragment } from "react";
 // import BG from "../assets/img/fish.webp";
 
 const HomePage = () => {
     return (
         <Fragment>
-            <NavBar />
+            {/* <TestNav /> */}
             {/* {!props.isLoading && <Dishes />}
             {props.isLoading && <LoadingSpinner />} */}
             <div style={{ backgroundImage: "url('src/assets/img/fishWall.jpg')", backgroundRepeat: "no-repeat ", backgroundSize: "100% 800px" }} className="w-full h-[800px] text-center text-white font-bold">
@@ -32,7 +32,7 @@ const HomePage = () => {
                 <h1 className='pt-10 text-[60px]'>ANGLER VIETNAM</h1>
                 <p>YOUR FAVOURITE BRANDS IN ONE STORE</p>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </Fragment >
     );
 };
