@@ -87,7 +87,7 @@ function CartPage() {
                   </div>
                   <div className="flex items-center space-x-4">
                     <p className="text-sm">
-                      {(item.price * item.quantity).toFixed(2)} ₭
+                      {(item.price * item.quantity).toFixed(2)} $
                     </p>
                     <svg
                       onClick={() => removeItem(item)}
