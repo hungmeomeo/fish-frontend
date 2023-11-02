@@ -33,14 +33,11 @@ function ProductDetailPage() {
             <Grid item xs={12} md={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginLeft: 4 }}>
                 <Link href="/home" underline='none'>
                     Home
-
                 </Link>
                 <KeyboardArrowRightIcon sx={{}} />
                 <Link href="/home" underline='none'>
                     Sale Items
                 </Link>
-
-
             </Grid>
             <Grid item xs={12} md={5}>
                 <CardOutLook>
