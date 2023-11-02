@@ -15,7 +15,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/products" element={<ListProductPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
+        <Route path="/products/:productid" element={<ProductDetailPage />} />
         {/* Add another pages here */}
       </Routes >
     </Router >

@@ -44,7 +44,8 @@ function ListProductPage() {
         setSort(event.target.value);
     };
     const handleView = (id) => {
-        navigate('/products/id')
+        console.log('idinlist', id);
+        navigate(`/products/${id}`)
     }
 
     console.log('product', products)
