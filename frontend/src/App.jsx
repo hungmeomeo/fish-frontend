@@ -20,11 +20,14 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/products" element={<ListProductPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
+
+        <Route path="/products/:productid" element={<ProductDetailPage />} />
+
         <Route path="/cart" element={<CartPage />} />
         <Route path="/user-cart" element={<UserCartPage />} />
         <Route path="/shipping-cost" element={<ShippingCost />} />
         <Route path="/guarantee" element={<Guarantee />} />
+
 
         {/* Add another pages here */}
       </Routes >
