@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from 'react'
-import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
+// import { Dialog } from '@headlessui/react'
+import {Dialog , Disclosure, Popover, Transition} from '@headlessui/react'
 import {
   Bars3Icon,
   XMarkIcon,
