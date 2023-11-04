@@ -9,7 +9,8 @@ function CartPage() {
   useEffect(() => {
     // Fetch cart items based on product IDs from the API
     if (productIds.length > 0) {
-      fetch(`https://fish-staging.onrender.com/query/item/${productIds.join(';')}`)
+      
+      fetch(`https://fish-staging.onrender.com/query/item/1}`)
         .then((response) => response.json())
         .then((data) => {
           // Update cartItems state with the fetched data
