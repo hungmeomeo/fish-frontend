@@ -44,10 +44,10 @@ function ProductDetailPage() {
                     <CardBody>
                         <img style={{ display: 'flex', width: '80%', height: "100%", justifyContent: 'center', alignItems: 'center' }} src={mainImage} alt="Hình" />
                     </CardBody>
-                    <ImageList sx={{marginLeft: 10, width: '40%', height: '30%', cursor: 'pointer' }} cols={3} rowHeight={100} >
+                    <ImageList sx={{ marginLeft: 10, width: '40%', height: '30%', cursor: 'pointer' }} cols={3} rowHeight={100} >
                         {listimage.map((item) => (
                             <ImageListItem key={item.url} >
-                                <img  src={item.url} onClick={() => setMainImage(item.url)} />
+                                <img src={item.url} onClick={() => setMainImage(item.url)} />
                             </ImageListItem>
                         ))}
                     </ImageList>
