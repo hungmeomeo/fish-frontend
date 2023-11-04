@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,9 +47,12 @@ export default function LoginPage() {
 
         // Store the token in a secure way for future authenticated requests
         sessionStorage.setItem("authToken", data.token);
+        
+        window.location.reload();
 
         // Redirect to the dashboard or another protected page
         navigate("/");
+        
       } else {
         // Handle unsuccessful login (e.g., wrong credentials)
         const errorData = await response.json();

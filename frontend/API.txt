@@ -1,6 +1,7 @@
 https://fish-demo.onrender.com/auth/login
 https://fish-demo.onrender.com/auth/logout
 https://fish-demo.onrender.com/auth/register
+https://fish-staging.onrender.com/query/item/1;3;4
 
 {
   "first_name": "John",
