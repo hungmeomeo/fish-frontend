@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCookie } from '../utils/CookieFunction';
 
 function CartPage() {
+  let currentCookie = getCookie('productid');
+  currentCookie = decodeURIComponent(currentCookie);
+
   const [cartItems, setCartItems] = useState([
     // ... your initial items here
     {
@@ -22,6 +26,7 @@ function CartPage() {
       quantity: 1,
     },
   ]);
+
 
   const incrementQuantity = (item) => {
     setCartItems((prevItems) =>
@@ -46,6 +51,7 @@ function CartPage() {
   };
 
   const calculateTotal = () => {
+    console.log(currentCookie);
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
@@ -129,6 +135,7 @@ function CartPage() {
         </div>
       </div>
     </div>
+    
   );
 }
 
