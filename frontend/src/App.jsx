@@ -11,24 +11,27 @@ import UserCartPage from "./pages/UserCartPage";
 
 import ShippingCost from "./pages/ShippingCost";
 import Guarantee from "./pages/Guarantee";
+import SearchPage from "./pages/SearchPage";
+import MainLayout from "./components/MainLayout/MainLayout";
 function App() {
   // const [isLoading] = useState(false);
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/products" element={<ListProductPage />} />
+        <Route  element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/products/:categoryid" element={<ListProductPage />} />
 
-        <Route path="/products/:productid" element={<ProductDetailPage />} />
+          <Route path="/products/:categoryid/:productid" element={<ProductDetailPage />} />
 
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/user-cart" element={<UserCartPage />} />
-        <Route path="/shipping-cost" element={<ShippingCost />} />
-        <Route path="/guarantee" element={<Guarantee />} />
-
-
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/user-cart" element={<UserCartPage />} />
+          <Route path="/shipping-cost" element={<ShippingCost />} />
+          <Route path="/guarantee" element={<Guarantee />} />
+          <Route path="/products/search" element={<SearchPage />} />
+        </Route>
         {/* Add another pages here */}
       </Routes >
     </Router >

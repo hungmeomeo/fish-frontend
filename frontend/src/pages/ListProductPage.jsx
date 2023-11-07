@@ -20,7 +20,8 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 import AppPagination from '../components/Pagnigation/AppPagination'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { products } from '../data/products';
 let products1 = [
     {
         id: 1,
@@ -33,7 +34,9 @@ let products1 = [
 function ListProductPage() {
     const [filter, setFilter] = useState('');
     const [sort, setSort] = useState('');
-    const [products, setProducts] = useState([])
+    const [productList, setProductList] = useState([])
+    let { categoryid } = useParams();
+    console.log('cate', categoryid);
     const navigate = useNavigate();
     const handleFilter = (event) => {
         setFilter(event.target.value);
@@ -45,7 +48,7 @@ function ListProductPage() {
     };
     const handleView = (id) => {
         console.log('idinlist', id);
-        navigate(`/products/${id}`)
+        navigate(`/products/${categoryid}/${id}`)
     }
 
     console.log('product', products)
@@ -99,25 +102,28 @@ function ListProductPage() {
                     </FormControl>
 
                 </Grid>
-                {products.map((product) => (
-                    <Grid item key={product.id} xs={2} sm={4} md={4} sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", margin: 0 }}>
+                {productList.map((product) => (
+                    <Grid item key={product.id} xs={2} sm={4} md={3} sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", margin: 0 }}>
                         <Box sx={{
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
                             flexDirection: "column",
-                            position: "relative"
+                            position: "relative",
+                            width: "90%"
                         }}>
                             <Card >
                                 <CardMedia
                                     component="img"
-                                    height="194"
-                                    width="80%"
+
+                                    sx={{
+                                        height: '300px',
+                                    }}
                                     image={product.image}
                                 />
                                 <CardContent>
                                     <Box sx={{ display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                                        <Typography variant="body2" >
+                                        <Typography variant="body2" sx ={{fontWeight: 'bold'}} >
                                             {product.name}
                                         </Typography>
                                         <Typography variant='body2' >
@@ -136,7 +142,7 @@ function ListProductPage() {
                     </Grid>
                 ))}
             </Grid>
-            <AppPagination setProducts={(p) => setProducts(p)} />
+            <AppPagination setProduct={setProductList} data={products} />
 
         </Container>
     )
