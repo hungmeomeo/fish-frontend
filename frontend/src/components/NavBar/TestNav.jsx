@@ -6,13 +6,17 @@ import logoUrl from "../../assets/img/footerIcon.svg";
 import SearchInput from "./SearchInput";
 import LogoutButton from "../LogoutButton";
 
+
 const products = [
-  { name: "Giảm giá", href: "#" },
-  { name: "Quần áo câu cá", href: "#" },
-  { name: "Cần câu và cuộn", href: "#" },
-  { name: "Mồi câu", href: "#" },
-  { name: "Dây câu", href: "#" },
-];
+
+  { name: 'Giảm giá', href: '/products/sale' },
+  { name: 'Quần áo câu cá', href: '/products/clothes' },
+  { name: 'Cần câu và cuộn', href: '/products/fishing-rods' },
+  { name: 'Mồi câu', href: '/products/fishing-bait' },
+  { name: 'Dây câu', href: '/products/fishing-line' },
+]
+=======
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -27,9 +31,10 @@ export default function TestNav() {
       setIsAuth(true);
     }
   }, []);
+  
 
   return (
-    <header className="bg-[#79DCF1] sticky top-0 z-10">
+<header className="bg-[#79DCF1] sticky top-0 z-10">
       <nav
         className="mx-auto flex max-w-8xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"

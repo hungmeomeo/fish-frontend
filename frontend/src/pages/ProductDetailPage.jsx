@@ -1,14 +1,16 @@
-import { Grid, Link, Paper, Typography, FormControl, InputLabel, Select, MenuItem, Box, Button, Divider, ImageList, ImageListItem } from '@mui/material'
+import { Grid, Link, Paper, Typography, FormControl, InputLabel, Select, MenuItem, Box, Button, Divider, ImageList, ImageListItem, CircularProgress } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardOutLook from '../components/CardEdited/CardOutlook';
 import CardBody from '../components/CardEdited/CardBody';
 import CardHead from '../components/CardEdited/CardHead';
 import { useParams } from 'react-router-dom';
 import AddToCartButton from '../components/AddToCartButton';
+import axios from 'axios';
+import MissingPage from './MissingPage';
 let listimage = [
     {
         url: 'https://fishingtackledirect.ie/wp-content/uploads/2020/02/Fishing-Rods.jpg'
@@ -22,101 +24,116 @@ let listimage = [
 ]
 function ProductDetailPage() {
     const [color, setColor] = useState('');
+    const [productDetail, setProductDetail] = useState([]);
+    //const [mainImage, setMainImage] = useState();
+    const [error, setError] = useState(false);
     let { productid } = useParams();
     console.log('productindetail', productid);
     const handleColor = (event) => {
         setColor(event.target.value);
     };
-    const [mainImage, setMainImage] = useState(listimage[0].url)
+    useEffect(() => {
+        async function getProductList() {
+            try {
+                const response = await axios.get(`https://fish-staging.onrender.com/query/item/${productid}`)
+                setProductDetail(response.data)
+                console.log(response.data)
+                console.log('hello')
+            } catch (error) {
+                setError(true)
+            }
+        }
+        getProductList()
+    }, [])
+    let mainImage = productDetail.length > 0 ? productDetail[0].image : '';
+    // if (productDetail.length > 0) {
+    //     setMainImage(productDetail[0].image)
+    // }
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={12} md={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginLeft: 4 }}>
-                <Link href="/home" underline='none'>
-                    Home
-                </Link>
-                <KeyboardArrowRightIcon sx={{}} />
-                <Link href="/home" underline='none'>
-                    Sale Items
-                </Link>
-            </Grid>
-            <Grid item xs={12} md={5}>
-                <CardOutLook>
-                    <CardBody>
-                        <img style={{ display: 'flex', width: '80%', height: "100%", justifyContent: 'center', alignItems: 'center' }} src={mainImage} alt="Hình" />
-                    </CardBody>
-                    <ImageList sx={{marginLeft: 10, width: '40%', height: '30%', cursor: 'pointer' }} cols={3} rowHeight={100} >
-                        {listimage.map((item) => (
-                            <ImageListItem key={item.url} >
-                                <img  src={item.url} onClick={() => setMainImage(item.url)} />
-                            </ImageListItem>
-                        ))}
-                    </ImageList>
-                </CardOutLook>
+        error === false ? (
+            <>
+                {productDetail.length > 0 ? (
+                    <>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} md={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginLeft: 4 }}>
+                                <Link href="/home" underline='none'>
+                                    Home
+                                </Link>
+                                <KeyboardArrowRightIcon sx={{}} />
+                                <Link href="/home" underline='none'>
+                                    Sale Items
+                                </Link>
+                            </Grid>
+                            <Grid item xs={12} md={5}>
+                                <CardOutLook>
+                                    <CardBody>
+                                        <img style={{ display: 'flex', width: '80%', height: "90%", justifyContent: 'center', alignItems: 'center' }} src={mainImage} alt="Hình" />
+                                    </CardBody>
+                                    {/* <ImageList sx={{ marginLeft: 10, width: '40%', height: '30%', cursor: 'pointer' }} cols={3} rowHeight={100} >
+                            {listimage.map((item) => (
+                                <ImageListItem key={item.url} >
+                                    <img src={item.url} onClick={() => setMainImage(item.url)} />
+                                </ImageListItem>
+                            ))}
+                        </ImageList> */}
+                                </CardOutLook>
 
-            </Grid>
-            <Grid item xs={12} md={6}>
-                <CardOutLook>
-                    <CardHead>
-                        FLASHABOU MINNOW BODY TUBING
-                    </CardHead>
-                    <CardBody>
-                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography variant='h6'>
-                                191.000đ
-                            </Typography>
-                            <Typography variant='h6'>
-                                A fish-scale look from a Flashabou color braided over Pearl with a removable core.   Similar to Mylar Tube/cord
-                            </Typography>
-                            <Typography variant='h6'>
-                                Small 1/8" diameter
-                            </Typography>
-                            <Typography variant='h6'>
-                                Medium 1/4" diameter
-                            </Typography>
-                            <Typography variant='h6'>
-                                Large 1/2" diameter
-                            </Typography>
-                            <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-                                Color
-                            </Typography>
-                            <FormControl sx={{ width: "20%", marginBottom: 2 }} >
-                                <InputLabel id="demo-simple-select-label">Color</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={color}
-                                    label="Color"
-                                    onChange={handleColor}
-                                >
-                                    <MenuItem value={'Yellow'}>Yellow</MenuItem>
-                                    <MenuItem value={'Red'}>Red</MenuItem>
-                                    <MenuItem value={'Blue'}>Blue</MenuItem>
-                                </Select>
-                            </FormControl>
-                            {/* <Button sx={{
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <CardOutLook>
+                                    <CardHead>
+                                        {productDetail[0].name}
+                                    </CardHead>
+                                    <CardBody>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                            <Typography variant='h6'>
+                                                {productDetail[0].price}$
+                                            </Typography>
+                                            <Typography variant='h6'>
+                                                {productDetail[0].description}
+                                            </Typography>
+
+                                            {/* <Button sx={{
                                 backgroundColor: '#f44336', color: 'white', width: '100%', ":hover": {
                                     backgroundColor: "#f44336",
                                 }
                             }}>
                                 ADD TO CART
                             </Button> */}
-                            <AddToCartButton productid={productid} />
+                                            <AddToCartButton productid={productid} />
+                                        </Box>
+
+                                    </CardBody>
+                                    <Divider sx={{ marginLeft: 4 }} variant="string" />
+                                    <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: 4, marginTop: 2, marginBottom: 2 }}>
+                                        <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
+                                            Share:
+                                        </Typography>
+                                        <TwitterIcon sx={{ marginRight: 2, marginLeft: 2 }} />
+                                        <InstagramIcon sx={{ marginRight: 2 }} />
+                                        <FacebookIcon />
+                                    </Box>
+                                </CardOutLook>
+                                
+
+                            </Grid>
+
+                        </Grid>
+                    </>
+                ) : (
+                    <>
+                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <CircularProgress color="inherit" />
                         </Box>
+                    </>
 
-                    </CardBody>
-                </CardOutLook>
-                <Divider sx={{ marginLeft: 4 }} variant="string" />
-                <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: 4, marginTop: 2 }}>
-                    <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                        Share:
-                    </Typography>
-                    <TwitterIcon sx={{ marginRight: 2, marginLeft: 2 }} />
-                    <InstagramIcon sx={{ marginRight: 2 }} />
-                    <FacebookIcon />
-                </Box>
-            </Grid>
+                )}
 
-        </Grid>
+            </>
+        ) : (
+            <MissingPage />
+        )
+
     )
 }
 

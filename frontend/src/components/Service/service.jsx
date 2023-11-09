@@ -1,11 +1,12 @@
-import { products } from "../../data/products";
+
 
 const Service = {
-    getData: ({from, to}) => {
+    getData: ({data, from, to}) => {
         return new Promise((resolve, reject) => {
+            console.log('productinservice', data)
             resolve({
-                count: products.length,
-                data: products.slice(from,to)
+                count: data.length,
+                data: data.slice(from,to)
             })
         })
     }

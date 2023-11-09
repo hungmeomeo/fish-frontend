@@ -9,8 +9,8 @@ import Footer from './components/footer/Footer.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    <TestNav />
+    {/* <TestNav /> */}
     <App />
-    <Footer />
+    {/* <Footer /> */}
   </>,
 )
