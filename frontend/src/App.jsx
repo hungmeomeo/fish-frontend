@@ -8,7 +8,6 @@ import ListProductPage from "./pages/ListProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import UserCartPage from "./pages/UserCartPage";
-
 import ShippingCost from "./pages/ShippingCost";
 import Guarantee from "./pages/Guarantee";
 import SearchPage from "./pages/SearchPage";
@@ -19,6 +18,7 @@ function App() {
   return (
     <Router>
       <Routes>
+
         <Route  element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -33,6 +33,7 @@ function App() {
           <Route path="/products/search" element={<SearchPage />} />
           <Route path="/404" element={<MissingPage />} />
         </Route>
+
         {/* Add another pages here */}
       </Routes >
     </Router >
