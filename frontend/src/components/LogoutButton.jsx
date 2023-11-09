@@ -1,8 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+
 
 function LogoutButton() {
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -24,7 +23,7 @@ function LogoutButton() {
         console.log("Logout Response:", response);
 
         // Redirect to the home page after successful logout
-        navigate("/login");
+        window.location.href = "/login";
       } else {
         console.error("Logout failed");
       }
@@ -38,7 +37,7 @@ function LogoutButton() {
       onClick={handleLogout}
       className="bg-red-500 text-white px-3 py-1 rounded-md"
     >
-      Logout
+      Đăng xuất
     </button>
   );
 }
