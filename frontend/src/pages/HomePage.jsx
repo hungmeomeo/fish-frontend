@@ -133,22 +133,6 @@ const HomePage = () => {
                                             width="80%"
                                             image={product.image}
                                         />
-                                        <CardContent>
-                                            <Box sx={{ display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                                                <Typography variant="body2" >
-                                                    {product.name}
-                                                </Typography>
-                                                <Typography variant='body2' >
-                                                    {product.price}
-                                                </Typography>
-                                            </Box>
-                                        </CardContent>
-                                        <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}   >
-                                            <Button variant='contained' onClick={() => handleView(product.id)}>
-                                                View
-                                            </Button>
-
-                                        </CardActions>
                                     </Card>
                                 </Box>
                             </Grid>
