@@ -114,7 +114,7 @@ function ProductDetailPage() {
                                         <FacebookIcon />
                                     </Box>
                                 </CardOutLook>
-                                
+
 
                             </Grid>
 
