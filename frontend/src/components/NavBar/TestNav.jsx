@@ -35,7 +35,7 @@ export default function TestNav() {
 
   return (
     <>
-      <header className="bg-[#79DCF1] sticky top-0">
+      <header className="bg-[#79DCF1] sticky top-0 z-10" >
         <nav className="mx-auto flex max-w-8xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="/" className="-m-1.5 p-1.5">

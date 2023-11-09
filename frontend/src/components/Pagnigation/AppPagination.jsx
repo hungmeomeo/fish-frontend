@@ -4,8 +4,11 @@ import Service from '../Service/service';
 
 const pageSize = 24;
 function AppPagination({ setProduct, data }) {
-  // const [count, setCount] = useState(data.length)
+  const [count, setCount] = useState(0)
   // const [page, setPage] = useState(1);
+  if (count !== data.length){
+    setCount(data.length);
+  }
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
@@ -14,19 +17,19 @@ function AppPagination({ setProduct, data }) {
   
   console.log('length', data.length)
   console.log('count', pagination.count)
-  // useEffect(() => {
-  //   setPagination({
-  //     ...pagination,
-  //     count: count,
-  //     from: 0,
-  //     to: pageSize
-  //   })
-  // }, [count])
+  useEffect(() => {
+    setPagination({
+      ...pagination,
+      count: count,
+      from: 0,
+      to: pageSize
+    })
+  }, [count])
   useEffect(() => {
     Service.getData({data, from: pagination.from, to: pagination.to }).then(response => {
       setPagination({
         ...pagination,
-        count: data.length
+        count: count
       })
       console.log('countinpagi', pagination.count)
       console.log('productsinpagi',response.data)

@@ -1,7 +1,8 @@
 import { Grid, Typography, Box, Card, CardMedia, CardContent, CardActions, Container, Button, Divider } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import AppPagination from '../components/Pagnigation/AppPagination';
+
 
 function SearchPage() {
     const [productSearch, setProductSearch] = useState([]);
@@ -12,6 +13,7 @@ function SearchPage() {
         console.log('idinlist', id);
         navigate(`/products/${id}`)
     }
+    
     return (
         <Container>
             <Grid container spacing={2}>
