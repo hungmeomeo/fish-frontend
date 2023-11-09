@@ -1,10 +1,12 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +18,8 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setEmailError(""); // Reset email error
+    setPasswordError(""); // Reset password error
 
     // Create a JSON object with the login data
     const loginData = {
@@ -37,18 +41,28 @@ export default function LoginPage() {
       );
 
       if (response.ok) {
-        // // The login was successful; parse the response data
+        // The login was successful; parse the response data
         const data = await response.json();
         console.log(data);
-        
+
         // Store the token in a secure way for future authenticated requests
         sessionStorage.setItem("authToken", data.token);
+        
+        window.location.reload();
 
         // Redirect to the dashboard or another protected page
         navigate("/");
+        
       } else {
         // Handle unsuccessful login (e.g., wrong credentials)
-        console.error("Login failed");
+        const errorData = await response.json();
+
+        if (errorData.email) {
+          setEmailError(errorData.email); // Display email-related error
+        }
+        if (errorData.password) {
+          setPasswordError(errorData.password); // Display password-related error
+        }
       }
     } catch (error) {
       // Handle network errors or request failures
@@ -91,8 +105,9 @@ export default function LoginPage() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <p className="text-red-500 text-xs">{emailError}</p>{" "}
+              {/* Display email-related error */}
             </div>
-
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -122,6 +137,8 @@ export default function LoginPage() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <p className="text-red-500 text-xs">{passwordError}</p>{" "}
+              {/* Display password-related error */}
             </div>
 
             <div>
