@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCookie, setPurchasedCookie } from "../utils/CookieFunction";
+import { deleteCookie, getCookie, getPurchasedCookie, setPurchasedCookie } from "../utils/CookieFunction";
 import { useNavigate } from "react-router-dom";
 
 function CartPage() {
@@ -7,7 +7,7 @@ function CartPage() {
   const currentCookie = getCookie("productid");
   const productIds = decodeURIComponent(currentCookie).split(";");
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     // Fetch cart items based on product IDs from the API
     if (productIds.length > 0) {
@@ -69,14 +69,13 @@ function CartPage() {
 
     //Set Purchase History
     const orderDetails = cartItems.map((item) => ({
-      id: item._id,
+      id: item.id,
       quantity: item.quantity,
     }));
 
-    // setPurchasedCookie("orderDetails", JSON.stringify(orderDetails), 1); // Adjust the expiration time as needed
-
+    setPurchasedCookie("orderDetails", JSON.stringify(orderDetails), 1); // Adjust the expiration time as needed
     // Clear the cookies to empty the cart
-
+    deleteCookie("productid");
     // Redirect to the home page
     navigate("/");
   };
