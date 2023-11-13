@@ -39,4 +39,3 @@ export const getPurchasedCookie = (name) => {
     }
     return '';
   };
-  
