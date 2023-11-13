@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import AddToCartButton from '../components/AddToCartButton';
 import axios from 'axios';
 import MissingPage from './MissingPage';
+import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
 let listimage = [
     {
         url: 'https://fishingtackledirect.ie/wp-content/uploads/2020/02/Fishing-Rods.jpg'
@@ -27,8 +28,10 @@ function ProductDetailPage() {
     const [productDetail, setProductDetail] = useState([]);
     //const [mainImage, setMainImage] = useState();
     const [error, setError] = useState(false);
-    let { productid } = useParams();
+    let { categoryid, productid } = useParams();
+    console.log('halo', window.location.href);
     console.log('productindetail', productid);
+    console.log('cateindetail', categoryid);
     const handleColor = (event) => {
         setColor(event.target.value);
     };
@@ -49,6 +52,7 @@ function ProductDetailPage() {
     // if (productDetail.length > 0) {
     //     setMainImage(productDetail[0].image)
     // }
+
     return (
         error === false ? (
             <>
@@ -60,8 +64,8 @@ function ProductDetailPage() {
                                     Home
                                 </Link>
                                 <KeyboardArrowRightIcon sx={{}} />
-                                <Link href="/home" underline='none'>
-                                    Sale Items
+                                <Link href={`/products/${categoryid}`} underline='none'>
+                                    {categoryid.charAt(0).toUpperCase() + categoryid.slice(1)}
                                 </Link>
                             </Grid>
                             <Grid item xs={12} md={5}>
