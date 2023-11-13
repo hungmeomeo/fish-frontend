@@ -80,7 +80,8 @@ function CartPage() {
     navigate("/");
   };
   return (
-    <div className="h-screen bg-gray-100 pt-20">
+    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex-grow">
       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
       {cartItems.length === 0 ? (
         <p className="text-center text-gray-700">Your cart is empty.</p>
@@ -180,6 +181,7 @@ function CartPage() {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }
