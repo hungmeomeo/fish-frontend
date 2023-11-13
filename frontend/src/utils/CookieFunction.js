@@ -4,7 +4,7 @@ export function setCookie(cname, cvalue) {
 
     storedValue = decodeURIComponent(cvalue);
     console.log('storedValue', storedValue);
-    document.cookie = cname + "=" + cvalue;
+    document.cookie = cname + "=" + cvalue + '; ' + 'path=/';
 }
 
 export function getCookie(cname) {
