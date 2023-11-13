@@ -22,3 +22,21 @@ export function getCookie(cname) {
     return "";
 }
 
+export const setPurchasedCookie = (name, value, days) => {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+  };
+
+export const getPurchasedCookie = (name) => {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split('=');
+      const trimmedName = cookieName.trim();
+      if (trimmedName === name) {
+        return decodeURIComponent(cookieValue);
+      }
+    }
+    return '';
+  };
+  

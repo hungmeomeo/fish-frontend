@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCookie } from "../utils/CookieFunction";
+import { getCookie, setPurchasedCookie } from "../utils/CookieFunction";
 import { useNavigate } from "react-router-dom";
 
 function CartPage() {
@@ -39,7 +39,7 @@ function CartPage() {
       )
     );
   };
-  
+
   const decrementQuantity = (item) => {
     setCartItems((prevItems) =>
       prevItems.map((prevItem) =>
@@ -65,15 +65,20 @@ function CartPage() {
 
   const handleCheckout = () => {
     // Notify the user of a successful order
-    alert('Order successfully!');
+    alert("Order successfully!");
+
+    //Set Purchase History
+    const orderDetails = cartItems.map((item) => ({
+      id: item._id,
+      quantity: item.quantity,
+    }));
+
+    // setPurchasedCookie("orderDetails", JSON.stringify(orderDetails), 1); // Adjust the expiration time as needed
 
     // Clear the cookies to empty the cart
-    // deleteCookie('productid');
 
+    // Redirect to the home page
     navigate("/");
-
-    // Redirect to the home page or any other page
-     // Redirect to the home page (change to your desired destination)
   };
   return (
     <div className="h-screen bg-gray-100 pt-20">
@@ -168,9 +173,9 @@ function CartPage() {
               </div>
             </div>
             <button
-        onClick={handleCheckout}
-        className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover-bg-blue-600"
-      >
+              onClick={handleCheckout}
+              className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover-bg-blue-600"
+            >
               Check out
             </button>
           </div>
