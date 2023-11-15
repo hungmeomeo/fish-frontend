@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const currentCookie = getCookie("productid");
+  console.log(decodeURIComponent(currentCookie))
   const productIds = decodeURIComponent(currentCookie).split(";");
   const navigate = useNavigate();
-  
+  console.log(productIds);
+  console.log(productIds.join(";"))
   useEffect(() => {
     // Fetch cart items based on product IDs from the API
     if (productIds.length > 0) {

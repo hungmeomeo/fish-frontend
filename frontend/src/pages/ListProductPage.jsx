@@ -115,7 +115,7 @@ function ListProductPage() {
                     </Container>
                 ) : (
                     <>
-                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center", p: 2 }}>
                             <CircularProgress color="inherit" />
                         </Box>
 
