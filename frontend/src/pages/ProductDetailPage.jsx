@@ -26,7 +26,7 @@ let listimage = [
 function ProductDetailPage() {
     const [color, setColor] = useState('');
     const [productDetail, setProductDetail] = useState([]);
-    //const [mainImage, setMainImage] = useState();
+    const [mainImage, setMainImage] = useState();
     const [error, setError] = useState(false);
     let { categoryid, productid } = useParams();
     console.log('halo', window.location.href);
@@ -40,6 +40,7 @@ function ProductDetailPage() {
             try {
                 const response = await axios.get(`https://fish-staging.onrender.com/query/item/${productid}`)
                 setProductDetail(response.data)
+                setMainImage(response.data[0].image)
                 console.log(response.data)
                 console.log('hello')
             } catch (error) {
@@ -48,7 +49,7 @@ function ProductDetailPage() {
         }
         getProductList()
     }, [])
-    let mainImage = productDetail.length > 0 ? productDetail[0].image : '';
+    // let mainimage = productDetail.length > 0 ? productDetail[0].image : '';
     // if (productDetail.length > 0) {
     //     setMainImage(productDetail[0].image)
     // }
@@ -126,7 +127,7 @@ function ProductDetailPage() {
                     </>
                 ) : (
                     <>
-                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center", p: 2 }}>
                             <CircularProgress color="inherit" />
                         </Box>
                     </>
