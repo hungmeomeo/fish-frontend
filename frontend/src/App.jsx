@@ -13,6 +13,7 @@ import Guarantee from "./pages/Guarantee";
 import SearchPage from "./pages/SearchPage";
 import MainLayout from "./components/MainLayout/MainLayout";
 import MissingPage from "./pages/MissingPage";
+import HistoryPage from "./pages/HistoryPage";
 function App() {
   // const [isLoading] = useState(false);
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/shipping-cost" element={<ShippingCost />} />
           <Route path="/guarantee" element={<Guarantee />} />
           <Route path="/products/search" element={<SearchPage />} />
+          <Route path="/order-history" element={<HistoryPage />} />
           <Route path="/404" element={<MissingPage />} />
         </Route>
 

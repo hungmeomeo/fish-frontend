@@ -172,7 +172,7 @@ export default function TestNav() {
                     <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
                       <div className="flex-auto">
                         <a
-                          href="#"
+                          href="/order-history"
                           className="block font-semibold text-gray-900"
                         >
                           Lịch sử mua hàng
