@@ -39,7 +39,7 @@ function HistoryPage() {
             {listOrder.length > 0 ? (
                 <>
                     <Container>
-                        <Grid container spacing={0} >
+                        <Grid container spacing={0} sx={{p: 4}} >
                             {listOrder.map((product) => (
                                 <React.Fragment key={product.id} >
 

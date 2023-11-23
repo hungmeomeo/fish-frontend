@@ -64,7 +64,7 @@ function CartPage() {
       0
     );
   };
-
+  console.log('cart', cartItems);
   const handleCheckout = () => {
     // Notify the user of a successful order
     alert("Order successfully!");
@@ -74,7 +74,7 @@ function CartPage() {
       id: item.id,
       quantity: item.quantity,
     }));
-
+    console.log('detail', orderDetails);
     setPurchasedCookie("orderDetails", JSON.stringify(orderDetails), 1); // Adjust the expiration time as needed
     // Clear the cookies to empty the cart
     deleteCookie("productid");
