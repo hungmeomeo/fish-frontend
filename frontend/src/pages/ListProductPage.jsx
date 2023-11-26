@@ -41,6 +41,7 @@ function ListProductPage() {
                 const response = await axios.get(`https://fish-staging.onrender.com/query/products/${categoryid}`)
                 setProductList(response.data)
                 console.log('hello')
+                console.log(response.data);
             } catch (error) {
                 setError(true)
             }
