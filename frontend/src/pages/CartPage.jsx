@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { getCookie } from "../utils/CookieFunction";
+import { deleteCookie, getCookie, getPurchasedCookie, setPurchasedCookie } from "../utils/CookieFunction";
 import { useNavigate } from "react-router-dom";
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const currentCookie = getCookie("productid");
+  console.log(decodeURIComponent(currentCookie))
   const productIds = decodeURIComponent(currentCookie).split(";");
   const navigate = useNavigate();
-
+  console.log(productIds);
+  console.log(productIds.join(";"))
   useEffect(() => {
     // Fetch cart items based on product IDs from the API
     if (productIds.length > 0) {
@@ -39,7 +41,7 @@ function CartPage() {
       )
     );
   };
-  
+
   const decrementQuantity = (item) => {
     setCartItems((prevItems) =>
       prevItems.map((prevItem) =>
@@ -62,21 +64,26 @@ function CartPage() {
       0
     );
   };
-
+  console.log('cart', cartItems);
   const handleCheckout = () => {
     // Notify the user of a successful order
-    alert('Order successfully!');
+    alert("Order successfully!");
 
+    //Set Purchase History
+    const orderDetails = cartItems.map((item) => ({
+      id: item.id,
+      quantity: item.quantity,
+    }));
+    console.log('detail', orderDetails);
+    setPurchasedCookie("orderDetails", JSON.stringify(orderDetails), 1); // Adjust the expiration time as needed
     // Clear the cookies to empty the cart
-    // deleteCookie('productid');
-
+    deleteCookie("productid");
+    // Redirect to the home page
     navigate("/");
-
-    // Redirect to the home page or any other page
-     // Redirect to the home page (change to your desired destination)
   };
   return (
-    <div className="h-screen bg-gray-100 pt-20">
+    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex-grow">
       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
       {cartItems.length === 0 ? (
         <p className="text-center text-gray-700">Your cart is empty.</p>
@@ -168,14 +175,15 @@ function CartPage() {
               </div>
             </div>
             <button
-        onClick={handleCheckout}
-        className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover-bg-blue-600"
-      >
+              onClick={handleCheckout}
+              className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover-bg-blue-600"
+            >
               Check out
             </button>
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }

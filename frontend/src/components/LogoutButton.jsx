@@ -1,5 +1,5 @@
 import React from "react";
-
+import { deleteCookie } from "../utils/CookieFunction";
 
 function LogoutButton() {
 
@@ -21,7 +21,7 @@ function LogoutButton() {
         // The logout was successful; remove the token from storage
         sessionStorage.removeItem("authToken");
         console.log("Logout Response:", response);
-
+        deleteCookie("productid");
         // Redirect to the home page after successful logout
         window.location.href = "/login";
       } else {
