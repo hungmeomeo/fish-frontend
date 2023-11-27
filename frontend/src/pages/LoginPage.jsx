@@ -12,7 +12,15 @@ export default function LoginPage() {
   useEffect(() => {
     let token = sessionStorage.getItem("authToken");
     if (token) {
-      navigate("/");
+      const checkoutpage = sessionStorage.getItem('checkOutPage');
+      if (checkoutpage){
+        sessionStorage.removeItem('checkOutpage');
+        navigate(checkoutpage)
+      }
+      else{
+        navigate("/");
+      }
+      
     }
   });
 

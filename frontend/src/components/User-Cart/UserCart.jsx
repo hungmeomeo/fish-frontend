@@ -1,180 +1,350 @@
 import { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import LOGO from "../../assets/img/footerIcon.svg"
+import { Grid, TextField, Divider, Button, Box, Paper, Typography } from "@mui/material";
+import { LoadingButton } from '@mui/lab';
+import { styled } from '@mui/material/styles';
+import axios from "axios";
+import { jwtDecode } from 'jwt-decode';
+import { deleteCookie } from "../../utils/CookieFunction";
 
 
 const UserCart = () => {
-  const [isShowModal, setIsShowModal] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    phoneNumber: "-----",
-    address: "-----",
-    receiver: "-----",
-  });
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const [cardNumber, setCardNumber] = useState('');
+  const [date, setDate] = useState('')
+  const [cvvNumber, setCvvNumber] = useState('')
+  const [nameCard, setNameCard] = useState('')
+  const [validName, setValidName] = useState(true)
+  const [validPhone, setValidPhone] = useState(true)
+  const [validAddress, setValidAddress] = useState(true)
+  const [validCard, setValidCard] = useState(true)
+  const [validDate, setValidDate] = useState(true)
+  const [validCvv, setValidCvv] = useState(true)
+  const [validNameCard, setValidNameCard] = useState(true)
+  const [payClick, setPayClick] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const data = location.state.data;
+  const quantity = location.state.quantity;
+  console.log('hello', location.state.data);
+  const handleName = (event) => {
+    setName(event.target.value)
+  }
+  const handlePhone = (event) => {
+    setPhone(event.target.value)
+  }
+  const handleAddress = (event) => {
+    setAddress(event.target.value)
+  }
+  const handleCardNumber = (event) => {
+    setCardNumber(event.target.value)
+  }
+  const handleDate = (event) => {
+    setDate(event.target.value)
+  }
+  const handleCvvNumber = (event) => {
+    setCvvNumber(event.target.value)
+  }
+  const handleNameCard = (event) => {
+    setNameCard(event.target.value)
+  }
+  let totalBill = 0;
+  for (let i = 0; i < data.length; i++) {
+    totalBill += data[i].price * data[i].so_luong
+  }
+  console.log('total', totalBill)
+  const handleSubmit = (e) => {
 
-
-  const addressInputRef = useRef();
-  const phoneNumInputRef = useRef();
-  const receiverInputRef = useRef();
-
-  let subTotalCost = 0;
-  subTotalCost.toFixed(2);
-
-  const tax = 1.99;
-  const deliveryFee = 2.99;
-  let totalPrice = (subTotalCost + tax + deliveryFee + 88.99).toFixed(3);
-
-  const confirmInfoHandler = (e) => {
     e.preventDefault();
-
-    setUserInfo({
-      phoneNumber: phoneNumInputRef.current.value,
-      address: addressInputRef.current.value,
-      receiver: receiverInputRef.current.value,
-    });
-  };
-
-
-
-  const sendOrderHandler = () => {
-    setIsShowModal(true);
-  };
+    console.log('startsubmit')
+    if (payClick === true) {
+      if (!validName && (name === "")) {
+        setValidName(false)
+      }
+      if (!validPhone && (phone === "")) {
+        setValidPhone(false)
+      }
+      if (!validAddress && (address === "")) {
+        setValidAddress(false)
+      }
+      if (!validCard && (cardNumber === "")) {
+        setValidCard(false)
+      }
+      if (!validDate && (date === "")) {
+        setValidDate(false)
+      }
+      if (!validCvv && (cvvNumber === "")) {
+        setValidCvv(false)
+      }
+      if (!validNameCard && (nameCard === "")) {
+        setValidNameCard(false)
+      }
+      if (validName && name !== "" && validPhone && phone !== "" && validAddress && address !== ""
+        && validCard && cardNumber !== "" && validDate && date !== "" && validCvv && cvvNumber !== ""
+        && validNameCard && nameCard !== "") {
+        setPayClick(false);
+        setLoading(true)
+        console.log('hello')
+        const token = window.sessionStorage.getItem('authToken')
+        const user = jwtDecode(token)
+        console.log('token', token)
+        console.log('id', user)
+        axios({
+          method: 'post',
+          url: 'https://fish-demo.onrender.com/purchase/buyItem',
+          data: {
+            user_id: user.user_id,
+            cart: data,
+          }
+        })
+          .then(res => {
+            console.log('hello', res);
+            setLoading(false);
+            deleteCookie('productid')
+            // alert(res.data.response);
+            navigate('/')
+          })
+          .catch(err => console.log('error', err))
+      }
+    }
+  }
+  const handlePay = () => {
+    console.log('hellopay')
+    setPayClick(true)
+  }
 
   return (
-    <Fragment>
-      <header className="bg-[#79DCF1] sticky top-0 z-10">
-        <div className="container max-w-[75rem] mx-auto flex items-center justify-between p-4">
-          <img
-            src={LOGO}
-            alt="logo"
-            className="w-[128px]"
-          />
-        </div>
-      </header>
-      <main className="container max-w-[75rem] mx-auto px-6 my-6">
-        <Link to="/home" className="flex items-center">
-          <FontAwesomeIcon icon={faArrowLeft} className="px-2" />
-          <span>Back</span>
-        </Link>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <form onSubmit={confirmInfoHandler} className="flex flex-col mt-10">
-            <h1 className="text-center md:text-left text-2xl pb-4 border-b border-gray-500">
-              Deliver Detail
-            </h1>
-            <input
-              className="focus:outline-none p-3 border border-slate-300 rounded-md mt-4"
-              type="text"
-              placeholder="Your address"
-              ref={addressInputRef}
-              required
-            />
-            <input
-              className="focus:outline-none p-3 border border-slate-300 rounded-md mt-4"
-              type="text"
-              placeholder="Phone number"
-              ref={phoneNumInputRef}
-              required
-            />
-            <input
-              className="focus:outline-none p-3 border border-slate-300 rounded-md mt-4"
-              type="text"
-              placeholder="Deliver to"
-              ref={receiverInputRef}
-              required
-            />
-            <button className="rounded-md bg-[#F91944] p-3 mt-4 focus:outline-none text-white transform transition duration-200 hover:sacle-150 hover:shadow-lg">
-              Save & continue
-            </button>
-          </form>
-          <div className="p-6 border border-slate-200 shadow-md rounded-lg">
-            <h1 className="text-2xl pb-4 text-center">Order summary</h1>
-            <p className="text-gray-500">
-              {"Receiver: "}
-              <span className="font-semibold text-gray-700">
-                {userInfo.receiver}
-              </span>
-            </p>
-            <p className="text-gray-500 mt-4">
-              {"Address: "}
-              <span className="font-semibold text-gray-700">
-                {userInfo.address}
-              </span>
-            </p>
-            <p className="text-gray-500 mt-4">
-              {"Phone number: "}
-              <span className="font-semibold text-gray-700">
-                {userInfo.phoneNumber}
-              </span>
-            </p>
-            <p className="text-gray-500 mt-4">
-              {`Delivering time: `}
-              <span className="font-semibold text-gray-700">
-                1-2 days
-              </span>
-            </p>
-            <div className="mt-2 max-h-[224px] overflow-scroll scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-slate-100">
-              <div
-                className="flex items-center justify-between pt-4"
-              >
+    <>
+      <Grid container spacing={2} sx={{ m: 1 }}>
+        <Grid item xs={12} md={5} >
+          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', m :1 }}>
+            <Typography variant="h5" sx ={{fontWeight: 'bold'}}>
+              Order Summary
+            </Typography>
+          </Grid>
+          {location.state.data.map((item) => (
+            <Paper
+              key={item.id}
+              sx={{ display: 'flex', flexDirection: 'row', marginBottom: 3, boxShadow: 5 }}
+            >
+              <Box>
                 <img
-                  src='src/assets/img/fishing_rod.webp'
-                  alt='test'
-                  className="w-[96px] h-[96px] rounded-full"
+                  style={{ margin: 0, height: '150px'  }}
+                  src={item.image}
+                  alt="product-image"
+                  className="w-full rounded-lg sm:w-40"
                 />
-                <div className="text-gray-500 px-2 w-[202px]">
-                  <h5 className="line-clamp-1">Fishing Rod</h5>
-                  <h1>$88.99</h1>
-                  <span>{`Brand: SHIMANO`}</span>
-                </div>
-                <div className="flex flex-col mr-4">
-                  <p className="text-gray-500 line-clamp-1 mb-2">
-                    items: 1
-                  </p>
-                  <FontAwesomeIcon
-                    icon={faTrashCan}
-                    className="text-gray-700 cursor-pointer"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col mt-6">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Subtotal:</span>
-                <span className="font-bold text-gray-700">{`$${subTotalCost}`}</span>
-              </div>
-              <div className="flex justify-between mt-4">
-                <span className="text-gray-500">Tax:</span>
-                <span className="font-bold text-gray-700">{`$${tax}`}</span>
-              </div>
-              <div className="flex justify-between mt-4">
-                <span className="text-gray-500">Delivery fee:</span>
-                <span className="font-bold text-gray-700">{`$${deliveryFee}`}</span>
-              </div>
-              <div className="flex justify-between mt-4 text-xl">
-                <span className="text-gray-500">Total price:</span>
-                <span className="font-bold text-gray-700">{`$${totalPrice}`}</span>
-              </div>
-            </div>
-            <div>
-              <button
-                onClick={sendOrderHandler}
-                disabled={
-                  userInfo.phoneNumber === "-----" &&
-                  userInfo.phoneNumber === "-----" &&
-                  userInfo.phoneNumber === "-----"
-                }
-                className="disabled:opacity-40 w-full rounded-md bg-[#F91944] p-3 mt-4 focus:outline-none text-white transform transition duration-200 enabled:hover:sacle-150 enabled:hover:shadow-lg"
-              >
-                <Link to="/">Order now</Link>
-              </button>
-            </div>
-          </div>
-        </div>
-      </main>
-    </Fragment>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+
+                <Box sx={{ m: 1 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    {item.ten_hang}
+                  </Typography >
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <Typography variant="h6">
+                    Quantity: {item.so_luong}
+                  </Typography>
+                </Box>
+                <Box sx={{ m: 1 }}>
+                  <Typography variant="h6">
+                    {(item.price * item.so_luong).toFixed(2)} $
+                  </Typography>
+                </Box>
+              </Box>
+            </Paper>
+          ))}
+          {/* <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
+            <Paper sx={{ display: 'flex', flexDirection: 'column', boxShadow: 10 }}>
+              <Grid container spacing={1} sx={{ m: 1 }}>
+                <Grid item xs={5} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                  Subtotal
+                </Grid>
+
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  ${totalBill}
+                </Grid>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                  Shipping
+                </Grid>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  $4.99
+                </Grid>
+              </Grid>
+              <Divider sx={{ borderborderColor: 'divider', marginX: 1 }} />
+              <Grid container spacing={1} sx={{ m: 1 }}>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Total </Typography>
+                </Grid>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  ${(totalBill + 4.99).toFixed(2)} USD (including VAT)
+                </Grid>
+              </Grid>
+
+            </Paper>
+          </Grid> */}
+        </Grid>
+        <Grid item xs={12} md={6} >
+          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography variant="h5" sx = {{fontWeight: 'bold'}}>
+              Billing Information
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
+            <Paper sx={{ display: 'flex', flexDirection: 'column', boxShadow: 10 }}>
+              <Grid container spacing={1} sx={{ m: 1 }}>
+                <Grid item xs={5} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                  Subtotal
+                </Grid>
+
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  ${totalBill}
+                </Grid>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                  Shipping
+                </Grid>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  $4.99
+                </Grid>
+              </Grid>
+              <Divider sx={{ borderborderColor: 'divider', marginX: 1 }} />
+              <Grid container spacing={1} sx={{ m: 1 }}>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Total </Typography>
+                </Grid>
+                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  ${(totalBill + 4.99).toFixed(2)} USD (including VAT)
+                </Grid>
+              </Grid>
+
+
+              {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', m: 1 }}>
+                  <Typography sx={{ marginRight: 1 }} variant="subtitle1">Subtotal:</Typography>
+                  <Typography variant="subtitle1">${totalBill}</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                  <Typography sx={{ marginRight: 1 }} variant="subtitle1">Shipping:</Typography>
+                  <Typography variant="subtitle1">$4.99</Typography>
+                </Box>
+              </Box>
+              <Divider sx={{ borderborderColor: 'divider', marginX: 1, marginY: 1 }} />
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', m: 1 }}>
+                  <Typography  variant="h5" sx={{ fontWeight: 'bold', marginRight: 1 }}>Total:</Typography>
+                  <Typography variant="h6" >
+                    ${(totalBill + 4.99).toFixed(2)} USD 
+                  </Typography>
+                </Box>
+                <Typography variant="subtitle1">(including VAT)</Typography>
+              </Box> */}
+            </Paper>
+          </Grid>
+          <form onSubmit={handleSubmit} >
+            <Grid container spacing={1} sx={{ marginTop: 3 }}>
+              <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start' }} >
+                <Typography variant="h6" sx = {{fontWeight: 'bold'}}>
+                  Personal Information
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={6} >
+                <TextField
+                  placeholder='Name'
+                  type='text'
+                  fullWidth
+                  value={name}
+                  error={!validName}
+                  onChange={handleName}
+                />
+              </Grid>
+              <Grid item xs={12} md={6} >
+                <TextField
+                  placeholder='Phone Number'
+                  type='text'
+                  fullWidth
+                  value={phone}
+                  error={!validPhone}
+                  onChange={handlePhone}
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  placeholder='Address'
+                  type='text'
+                  fullWidth
+                  value={address}
+                  error={!validAddress}
+                  onChange={handleAddress}
+                />
+              </Grid>
+
+              <Divider sx={{ marginY: 1, borderborderColor: 'divider' }} />
+              <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: 1 }} >
+                <Typography variant="h6" sx = {{fontWeight: 'bold'}}>
+                  Payment Information
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={12}  >
+                <TextField
+                  placeholder='Card Number'
+                  type='text'
+                  fullWidth
+                  value={cardNumber}
+                  error={!validCard}
+                  onChange={handleCardNumber}
+                />
+              </Grid>
+              <Grid item xs={6} md={6} >
+                <TextField
+                  placeholder='Expiration date'
+                  type='text'
+                  fullWidth
+                  value={date}
+                  error={!validDate}
+                  onChange={handleDate}
+                />
+              </Grid>
+              <Grid item xs={6} md={6} >
+                <TextField
+                  placeholder='Security code'
+                  type='text'
+                  fullWidth
+                  value={cvvNumber}
+                  error={!validCvv}
+                  onChange={handleCvvNumber}
+
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  placeholder='Name Card'
+                  type='text'
+                  fullWidth
+                  name='Group Object name'
+                  value={nameCard}
+                  error={!validNameCard}
+                  onChange={handleNameCard}
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <LoadingButton loading={loading} type="submit" size='large' onClick={handlePay} fullWidth variant='contained' sx={{ backgroundColor: '#1773b0' }}>
+                  Pay Now
+                </LoadingButton>
+              </Grid>
+            </Grid>
+          </form>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 

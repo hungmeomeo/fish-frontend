@@ -48,12 +48,8 @@ function AddToCartButton(props) {
   }
   return (
     <>
-      <Button onClick={() => handleAdd(props.productid)} sx={{
-        backgroundColor: '#f44336', color: 'white', width: '100%', ":hover": {
-          backgroundColor: "#f44336",
-        }
-      }}>
-        ADD TO CART
+      <Button onClick={() => handleAdd(props.productid)} variant = 'outlined' sx = {{width: '50%'}}>
+        Add to cart
       </Button>
       {/* <ToastContainer
         position="top-center"
