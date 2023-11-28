@@ -1,4 +1,4 @@
-import { Grid, Link, Paper, Typography, FormControl, InputLabel, Select, MenuItem, Box, Button, Divider, ImageList, ImageListItem, CircularProgress } from '@mui/material'
+import { Grid, Link, Paper, Typography, Button, Box, Divider, ImageList, ImageListItem, CircularProgress, ButtonGroup } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -7,10 +7,11 @@ import React, { useEffect, useState } from 'react'
 import CardOutLook from '../components/CardEdited/CardOutlook';
 import CardBody from '../components/CardEdited/CardBody';
 import CardHead from '../components/CardEdited/CardHead';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import AddToCartButton from '../components/AddToCartButton';
 import axios from 'axios';
-import MissingPage from './MissingPage';
+
+
 let listimage = [
     {
         url: 'https://fishingtackledirect.ie/wp-content/uploads/2020/02/Fishing-Rods.jpg'
@@ -22,21 +23,28 @@ let listimage = [
         url: 'https://media.istockphoto.com/id/1335786676/vector/fishing-rod-icon-on-white-background-fishing-rod-with-reel-sign-fishing-rod-camping-symbol.jpg?s=170667a&w=0&k=20&c=LRu9ITsi1soHfATu-3u3E15ParCas6BRIUtOSaworwo='
     }
 ]
-function ProductDetailPage() {
+export default function ProductDetailPage() {
     const [color, setColor] = useState('');
     const [productDetail, setProductDetail] = useState([]);
-    //const [mainImage, setMainImage] = useState();
+    const [quantity, setQuantity] = useState(1);
+    const [mainImage, setMainImage] = useState();
     const [error, setError] = useState(false);
-    let { productid } = useParams();
+    const navigate = useNavigate();
+    let { categoryid, productid } = useParams();
+    console.log('halo', window.location.href);
     console.log('productindetail', productid);
-    const handleColor = (event) => {
-        setColor(event.target.value);
-    };
+    console.log('cateindetail', categoryid);
+    // const token = window.sessionStorage.getItem('authToken')
+    // const iduser = jwtDecode(token)
+    // console.log('token', token)
+    // console.log('id', iduser)
+
     useEffect(() => {
         async function getProductList() {
             try {
                 const response = await axios.get(`https://fish-staging.onrender.com/query/item/${productid}`)
                 setProductDetail(response.data)
+                setMainImage(response.data[0].image)
                 console.log(response.data)
                 console.log('hello')
             } catch (error) {
@@ -45,10 +53,37 @@ function ProductDetailPage() {
         }
         getProductList()
     }, [])
-    let mainImage = productDetail.length > 0 ? productDetail[0].image : '';
-    // if (productDetail.length > 0) {
-    //     setMainImage(productDetail[0].image)
-    // }
+    const handleIncrement = () => {
+        setQuantity(quantity + 1);
+    }
+    const handleDecrement = () => {
+        setQuantity(quantity - 1);
+        if (quantity < 1) {
+            setQuantity(1)
+        }
+    }
+    const handleBuyNow = () => {
+        const token = window.sessionStorage.getItem('authToken')
+
+        const infoitem = [
+            {
+                prod_id: productDetail[0]._id,
+                ten_hang: productDetail[0].name,
+                so_luong: quantity,
+                price: productDetail[0].price,
+                image: productDetail[0].image
+            }
+        ]
+        window.sessionStorage.setItem('cart', JSON.stringify(infoitem))
+        // check login
+        if (token) {
+            navigate('/check-out')
+        }
+        else {
+            sessionStorage.setItem('previousPage', '/check-out')
+            navigate('/login')
+        }
+    }
     return (
         error === false ? (
             <>
@@ -60,8 +95,8 @@ function ProductDetailPage() {
                                     Home
                                 </Link>
                                 <KeyboardArrowRightIcon sx={{}} />
-                                <Link href="/home" underline='none'>
-                                    Sale Items
+                                <Link href={`/products/${categoryid}`} underline='none'>
+                                    {categoryid.charAt(0).toUpperCase() + categoryid.slice(1)}
                                 </Link>
                             </Grid>
                             <Grid item xs={12} md={5}>
@@ -77,7 +112,6 @@ function ProductDetailPage() {
                             ))}
                         </ImageList> */}
                                 </CardOutLook>
-
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <CardOutLook>
@@ -85,24 +119,39 @@ function ProductDetailPage() {
                                         {productDetail[0].name}
                                     </CardHead>
                                     <CardBody>
-                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <Typography variant='h6'>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 1 }}>
+                                            <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                                                 {productDetail[0].price}$
                                             </Typography>
+                                            <ButtonGroup>
+                                                <Button size='small' onClick={handleDecrement}>
+                                                    -
+                                                </Button>
+                                                <Button disabled sx={{ color: 'blue' }}>
+                                                    {quantity}
+                                                </Button>
+                                                <Button size='small' onClick={handleIncrement}>
+                                                    +
+                                                </Button>
+
+                                            </ButtonGroup>
                                             <Typography variant='h6'>
                                                 {productDetail[0].description}
                                             </Typography>
 
-                                            {/* <Button sx={{
-                                backgroundColor: '#f44336', color: 'white', width: '100%', ":hover": {
-                                    backgroundColor: "#f44336",
-                                }
-                            }}>
-                                ADD TO CART
-                            </Button> */}
-                                            <AddToCartButton productid={productid} />
+                                            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                <AddToCartButton productid={productid} />
+                                            </Grid>
+                                            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 1 }}>
+                                                <Button onClick={handleBuyNow} sx={{
+                                                    backgroundColor: '#f44336', color: 'white', width: '50%', ":hover": {
+                                                        backgroundColor: "#f44336",
+                                                    }
+                                                }}>
+                                                    Buy Now
+                                                </Button>
+                                            </Grid>
                                         </Box>
-
                                     </CardBody>
                                     <Divider sx={{ marginLeft: 4 }} variant="string" />
                                     <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: 4, marginTop: 2, marginBottom: 2 }}>
@@ -122,7 +171,7 @@ function ProductDetailPage() {
                     </>
                 ) : (
                     <>
-                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center", p: 2 }}>
                             <CircularProgress color="inherit" />
                         </Box>
                     </>
@@ -137,4 +186,3 @@ function ProductDetailPage() {
     )
 }
 
-export default ProductDetailPage

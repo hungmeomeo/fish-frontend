@@ -28,7 +28,7 @@ const SearchInput = () => {
   }
   const handleNavigate = (event) => {
     if (event.key === "Enter") {
-      navigate('/products/search', {
+      navigate(`/products/search/search=${wordSearch}`, {
         state: {
           data: filterData
         }

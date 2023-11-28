@@ -1,33 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { getCookie } from '../utils/CookieFunction'
 import axios from 'axios';
 import { CircularProgress, Container, Grid, Paper, Typography, Box, Divider } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
-
+import { jwtDecode } from 'jwt-decode';
+import {  useNavigate } from 'react-router-dom';
 function HistoryPage() {
-    const [listOrder, setListOrder] = useState([])
-    const orderhistory = JSON.parse(getCookie('orderDetails'));
-    console.log('orderhistory', orderhistory);
-    console.log(typeof (orderhistory))
+    const [listHistory, setListHistory] = useState([])
+    const navigate = useNavigate();
+    
+    // const orderhistory = JSON.parse(getCookie('orderDetails'));
+    // console.log('orderhistory', orderhistory);
+    // console.log(typeof (orderhistory))
     // list the id
-    let listID = orderhistory.map((order) => order.id)
-    console.log(typeof (listID));
-    console.log(listID)
+    // let listID = orderhistory.map((order) => order.id)
+    // console.log(typeof (listID));
+    // console.log(listID)
     // convert object to array
-    let convertlistorder = Object.values(listID)
-    console.log(convertlistorder.join(';'));
-    console.log('convert', Object.values(listID))
+    // let convertlistorder = Object.values(listID)
+    // console.log(convertlistorder.join(';'));
+    // console.log('convert', Object.values(listID))
     useEffect(() => {
         async function getOrderHistory() {
             try {
-                const response = await axios.get(`https://fish-staging.onrender.com/query/item/${convertlistorder.join(';')}`)
-                console.log(response.data);
-                let full_list = [];
-                for (let i = 0; i < orderhistory.length; i++) {
-                    full_list.push({ ...orderhistory[i], ...response.data[i] })
+                const token = window.sessionStorage.getItem('authToken')
+                if (token) {
+                    const user = jwtDecode(token)
+                    const response = await axios.get(`https://fish-demo.onrender.com/purchase/returnItem/${user.user_id}`)
+                    console.log(response.data);
+                    setListHistory(response.data);
                 }
-                console.log('list', full_list)
-                setListOrder(full_list);
+                else {
+                    sessionStorage.setItem('previousPage', '/order-history')
+                    navigate('/login')
+                }
+
             } catch (error) {
                 console.log(error)
             }
@@ -36,53 +43,55 @@ function HistoryPage() {
     }, [])
     return (
         <>
-            {listOrder.length > 0 ? (
+            {listHistory.length > 0 ? (
                 <>
                     <Container>
-                        <Grid container spacing={0} sx={{p: 4}} >
-                            {listOrder.map((product) => (
-                                <React.Fragment key={product.id} >
-
-                                    <Box sx={{ display: 'flex', flexDirection: 'column', boxShadow: 4, width: '80%', m: 1 }} >
-                                        <Box sx = {{width: '98%'}}>
-                                            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                                                <Typography variant='subtitle1' >
-                                                    <DoneIcon color='success' /> Paid
-                                                </Typography>
-                                            </Grid>
-                                        </Box>
-                                        <Divider sx={{ marginY: 1, marginX: 1, width: '98%' }} />
-                                        <Box sx = {{display: 'flex', flexDirection: 'row'}}>
-                                            <Grid item xs={2} md={1.8} m={1}>
-                                                <img
-                                                    style={{ width: '110px', height: '110px' }}
-                                                    src={product.image}
-                                                    alt="product-image"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={10} md={9} sx={{ display: 'flex', flexDirection: 'column', m: 1 }}>
-                                                <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-                                                    {product.name}
-                                                </Typography>
-                                                <Typography variant='subtitle1' sx={{ color: 'grey' }}>
-                                                    {product.cato.charAt(0).toUpperCase() + product.cato.slice(1)}
-                                                </Typography>
-                                                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                                                    <Typography variant='subtitle1'>
-                                                        x{product.quantity}
-                                                    </Typography>
-
-                                                    <Typography variant='subtitle1' sx={{ marginLeft: 20, color: '#f84434' }}  >
-                                                        {product.quantity * product.price}$
-                                                    </Typography>
-
+                        <Grid container spacing={1} sx={{ p: 4 }} >
+                            <Grid item xs={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', m: 1 }}>
+                                <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+                                    History Purchase
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} md={8}>
+                                {listHistory.map((buy) => (
+                                    <Box key={buy._id} >
+                                        {buy.cart.map((item) => (
+                                            <Paper
+                                                key={item.id}
+                                                sx={{ display: 'flex', flexDirection: 'row', marginBottom: 3, boxShadow: 5 }}
+                                            >
+                                                <Box>
+                                                    <img
+                                                        style={{ margin: 0, height: '150px' }}
+                                                        src={item.image}
+                                                        alt="product-image"
+                                                        className="w-full rounded-lg sm:w-40"
+                                                    />
                                                 </Box>
-                                            </Grid>
-                                        </Box>
-                                    </Box>
+                                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
 
-                                </React.Fragment>
-                            ))}
+                                                    <Box sx={{ m: 1 }}>
+                                                        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                                                            {item.ten_hang}
+                                                        </Typography >
+                                                    </Box>
+                                                    <Box sx={{ m: 1 }}>
+                                                        <Typography variant="h6">
+                                                            Quantity: {item.so_luong}
+                                                        </Typography>
+                                                    </Box>
+                                                    <Box sx={{ m: 1 }}>
+                                                        <Typography variant="h6">
+                                                            {(item.price * item.so_luong).toFixed(2)} $
+                                                        </Typography>
+                                                    </Box>
+                                                </Box>
+                                            </Paper>
+                                        ))}
+
+                                    </Box>
+                                ))}
+                            </Grid>
                         </Grid>
                     </Container>
                 </>

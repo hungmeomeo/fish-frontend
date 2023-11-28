@@ -35,6 +35,7 @@ function ListProductPage() {
     const handleFilter = (event) => {
         setFilter(event.target.value);
     };
+    
     useEffect(() => {
         async function getProductList() {
             try {
