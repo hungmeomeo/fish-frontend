@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -7,14 +7,14 @@ import { useRef, useState } from "react";
 import LOGO from "../../assets/img/footerIcon.svg"
 import { Grid, TextField, Divider, Button, Box, Paper, Typography } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
-import { styled } from '@mui/material/styles';
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
 import { deleteCookie } from "../../utils/CookieFunction";
 
 
-const UserCart = () => {
+const Checkout = () => {
   const [name, setName] = useState('');
+  const [showToast, setShowToast] = useState(false);
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
@@ -32,9 +32,12 @@ const UserCart = () => {
   const [payClick, setPayClick] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const data = location.state.data;
-  const quantity = location.state.quantity;
-  console.log('hello', location.state.data);
+  // const cart = useSelector(state => state.cart);
+  const cart = JSON.parse(window.sessionStorage.getItem('cart'))
+  console.log('cart', cart)
+  // const data = location.state.data;
+  // const quantity = location.state.quantity;
+  // console.log('hello', location.state.data);
   const handleName = (event) => {
     setName(event.target.value)
   }
@@ -57,15 +60,17 @@ const UserCart = () => {
     setNameCard(event.target.value)
   }
   let totalBill = 0;
-  for (let i = 0; i < data.length; i++) {
-    totalBill += data[i].price * data[i].so_luong
+  for (let i = 0; i < cart.length; i++) {
+    totalBill += cart[i].price * cart[i].so_luong
   }
+
+  console.log('testredux', cart);
   console.log('total', totalBill)
   const handleSubmit = (e) => {
 
     e.preventDefault();
     console.log('startsubmit')
-    if (payClick === true) {
+    
       if (!validName && (name === "")) {
         setValidName(false)
       }
@@ -102,19 +107,27 @@ const UserCart = () => {
           url: 'https://fish-demo.onrender.com/purchase/buyItem',
           data: {
             user_id: user.user_id,
-            cart: data,
+            cart: cart,
           }
         })
           .then(res => {
             console.log('hello', res);
             setLoading(false);
+            sessionStorage.removeItem('cart')
+            sessionStorage.removeItem('checkOutPage')
             deleteCookie('productid')
-            // alert(res.data.response);
+            setShowToast(true)
+            console.log('loading', loading)
+            alert('You paid successfully')
             navigate('/')
+
+
+            // alert(res.data.response);
+
           })
           .catch(err => console.log('error', err))
       }
-    }
+    
   }
   const handlePay = () => {
     console.log('hellopay')
@@ -125,19 +138,19 @@ const UserCart = () => {
     <>
       <Grid container spacing={2} sx={{ m: 1 }}>
         <Grid item xs={12} md={5} >
-          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', m :1 }}>
-            <Typography variant="h5" sx ={{fontWeight: 'bold'}}>
+          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', m: 1 }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
               Order Summary
             </Typography>
           </Grid>
-          {location.state.data.map((item) => (
+          {cart.map((item) => (
             <Paper
-              key={item.id}
+              key={item.prod_id}
               sx={{ display: 'flex', flexDirection: 'row', marginBottom: 3, boxShadow: 5 }}
             >
               <Box>
                 <img
-                  style={{ margin: 0, height: '150px'  }}
+                  style={{ margin: 0, height: '150px' }}
                   src={item.image}
                   alt="product-image"
                   className="w-full rounded-lg sm:w-40"
@@ -163,39 +176,10 @@ const UserCart = () => {
               </Box>
             </Paper>
           ))}
-          {/* <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
-            <Paper sx={{ display: 'flex', flexDirection: 'column', boxShadow: 10 }}>
-              <Grid container spacing={1} sx={{ m: 1 }}>
-                <Grid item xs={5} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                  Subtotal
-                </Grid>
-
-                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  ${totalBill}
-                </Grid>
-                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                  Shipping
-                </Grid>
-                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  $4.99
-                </Grid>
-              </Grid>
-              <Divider sx={{ borderborderColor: 'divider', marginX: 1 }} />
-              <Grid container spacing={1} sx={{ m: 1 }}>
-                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Total </Typography>
-                </Grid>
-                <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  ${(totalBill + 4.99).toFixed(2)} USD (including VAT)
-                </Grid>
-              </Grid>
-
-            </Paper>
-          </Grid> */}
         </Grid>
         <Grid item xs={12} md={6} >
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Typography variant="h5" sx = {{fontWeight: 'bold'}}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
               Billing Information
             </Typography>
           </Grid>
@@ -225,34 +209,12 @@ const UserCart = () => {
                   ${(totalBill + 4.99).toFixed(2)} USD (including VAT)
                 </Grid>
               </Grid>
-
-
-              {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', m: 1 }}>
-                  <Typography sx={{ marginRight: 1 }} variant="subtitle1">Subtotal:</Typography>
-                  <Typography variant="subtitle1">${totalBill}</Typography>
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                  <Typography sx={{ marginRight: 1 }} variant="subtitle1">Shipping:</Typography>
-                  <Typography variant="subtitle1">$4.99</Typography>
-                </Box>
-              </Box>
-              <Divider sx={{ borderborderColor: 'divider', marginX: 1, marginY: 1 }} />
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', m: 1 }}>
-                  <Typography  variant="h5" sx={{ fontWeight: 'bold', marginRight: 1 }}>Total:</Typography>
-                  <Typography variant="h6" >
-                    ${(totalBill + 4.99).toFixed(2)} USD 
-                  </Typography>
-                </Box>
-                <Typography variant="subtitle1">(including VAT)</Typography>
-              </Box> */}
             </Paper>
           </Grid>
           <form onSubmit={handleSubmit} >
             <Grid container spacing={1} sx={{ marginTop: 3 }}>
               <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start' }} >
-                <Typography variant="h6" sx = {{fontWeight: 'bold'}}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                   Personal Information
                 </Typography>
               </Grid>
@@ -289,7 +251,7 @@ const UserCart = () => {
 
               <Divider sx={{ marginY: 1, borderborderColor: 'divider' }} />
               <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: 1 }} >
-                <Typography variant="h6" sx = {{fontWeight: 'bold'}}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                   Payment Information
                 </Typography>
               </Grid>
@@ -336,16 +298,21 @@ const UserCart = () => {
                 />
               </Grid>
               <Grid item xs={12} md={12}>
-                <LoadingButton loading={loading} type="submit" size='large' onClick={handlePay} fullWidth variant='contained' sx={{ backgroundColor: '#1773b0' }}>
+                <LoadingButton loading={loading} type="submit" size='large'  fullWidth variant='contained' sx={{ backgroundColor: '#1773b0' }}>
                   Pay Now
                 </LoadingButton>
               </Grid>
             </Grid>
           </form>
         </Grid>
+
       </Grid>
+      
+        
+      
+
     </>
   );
 };
 
-export default UserCart;
+export default Checkout;

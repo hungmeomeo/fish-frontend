@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Button } from '@mui/material'
 import { getCookie, setCookie } from '../utils/CookieFunction';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function AddToCartButton(props) {
   console.log(props.productid);
 
@@ -29,21 +31,16 @@ function AddToCartButton(props) {
     else {
       setCookie("productid", ID)
     }
-    // setNotification(true)
-    // if (notification === true) {
-    //   toast.success('You switched successfully.', {
-    //     position: "top-center",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: false,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "colored",
-    //   });
-    //   setNotification(false);
-    // }
-
+    toast.success('You added successfully.', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+  });
 
   }
   return (
@@ -51,9 +48,9 @@ function AddToCartButton(props) {
       <Button onClick={() => handleAdd(props.productid)} variant = 'outlined' sx = {{width: '50%'}}>
         Add to cart
       </Button>
-      {/* <ToastContainer
+      <ToastContainer
         position="top-center"
-        autoClose={5000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -62,7 +59,7 @@ function AddToCartButton(props) {
         draggable
         pauseOnHover={false}
         theme="colored"
-      /> */}
+      />
     </>
   )
 }

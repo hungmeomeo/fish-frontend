@@ -36,7 +36,12 @@ function HistoryPage() {
             {listHistory.length > 0 ? (
                 <>
                     <Container>
-                        <Grid container spacing={0} sx={{ p: 4 }} >
+                        <Grid container spacing={1} sx={{ p: 4 }} >
+                            <Grid item xs = {12} md ={12} sx ={{display: 'flex', alignItems: 'center', justifyContent: 'center', m:1}}>
+                                <Typography variant='h5' sx = {{fontWeight: 'bold'}}>
+                                    History Purchase
+                                </Typography>
+                            </Grid>
                             <Grid item xs={12} md={8}>
                                 {listHistory.map((buy) => (
                                     <Box key={buy._id} >

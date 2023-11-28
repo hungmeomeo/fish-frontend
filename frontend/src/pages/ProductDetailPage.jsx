@@ -10,7 +10,7 @@ import CardHead from '../components/CardEdited/CardHead';
 import { useParams, useNavigate } from 'react-router-dom';
 import AddToCartButton from '../components/AddToCartButton';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+
 
 let listimage = [
     {
@@ -34,9 +34,6 @@ export default function ProductDetailPage() {
     console.log('halo', window.location.href);
     console.log('productindetail', productid);
     console.log('cateindetail', categoryid);
-    const handleColor = (event) => {
-        setColor(event.target.value);
-    };
     // const token = window.sessionStorage.getItem('authToken')
     // const iduser = jwtDecode(token)
     // console.log('token', token)
@@ -70,24 +67,20 @@ export default function ProductDetailPage() {
 
         const infoitem = [
             {
-                id: productDetail[0]._id,
+                prod_id: productDetail[0]._id,
                 ten_hang: productDetail[0].name,
                 so_luong: quantity,
                 price: productDetail[0].price,
                 image: productDetail[0].image
             }
         ]
+        window.sessionStorage.setItem('cart', JSON.stringify(infoitem))
         // check login
         if (token) {
-
-            navigate('/user-cart', {
-                state: {
-                    data: infoitem,
-                }
-            })
+            navigate('/check-out')
         }
         else {
-            sessionStorage.setItem('checkOutPage', '/user-cart')
+            sessionStorage.setItem('checkOutPage', '/check-out')
             navigate('/login')
         }
     }

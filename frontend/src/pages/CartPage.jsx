@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { deleteCookie, getCookie, getPurchasedCookie, setPurchasedCookie } from "../utils/CookieFunction";
 import { useNavigate } from "react-router-dom";
 
+
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const currentCookie = getCookie("productid");
@@ -65,15 +66,18 @@ function CartPage() {
     );
   };
   console.log('cart', cartItems);
-  // const testListorder = cartItems.map((item) => (
-  //   {
-  //     ten_hang: item.name,
-  //     so_luong: item.quantity,
-  //     price: item.price,
-  //     image: item.image
-  //   }
-  // ))
-  // console.log('test', testListorder)
+  const testListorder = cartItems.map((item) => (
+    {
+      ten_hang: item.name,
+      so_luong: item.quantity,
+      price: item.price,
+      image: item.image
+    }
+  ))
+  console.log('test', testListorder)
+  console.log('testcart', window.sessionStorage.setItem('cart', JSON.stringify(testListorder)))
+  console.log('testgetcart', JSON.parse(window.sessionStorage.getItem('cart')))
+
   const handleCheckout = () => {
 
     //Set Purchase History
@@ -88,7 +92,7 @@ function CartPage() {
 
     const Listorder = cartItems.map((item) => (
       {
-        
+        prod_id: item.id,
         ten_hang: item.name,
         so_luong: item.quantity,
         price: item.price,
@@ -96,19 +100,15 @@ function CartPage() {
       }
     ))
     const token = window.sessionStorage.getItem('authToken')
+    window.sessionStorage.setItem('cart', JSON.stringify(Listorder))
     if (token) {
-      navigate('/user-cart', {
-        state: {
-          data: Listorder,
-        }
-      })
+      navigate('/check-out')
     }
     else {
       // Redirect to the login page
-      sessionStorage.setItem('checkOutPage', '/user-cart')
+      sessionStorage.setItem('checkOutPage', '/check-out')
       navigate("/login");
     }
-
   };
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
