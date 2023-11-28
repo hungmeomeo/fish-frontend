@@ -4,8 +4,11 @@ import axios from 'axios';
 import { CircularProgress, Container, Grid, Paper, Typography, Box, Divider } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import { jwtDecode } from 'jwt-decode';
+import {  useNavigate } from 'react-router-dom';
 function HistoryPage() {
     const [listHistory, setListHistory] = useState([])
+    const navigate = useNavigate();
+    
     // const orderhistory = JSON.parse(getCookie('orderDetails'));
     // console.log('orderhistory', orderhistory);
     // console.log(typeof (orderhistory))
@@ -21,10 +24,17 @@ function HistoryPage() {
         async function getOrderHistory() {
             try {
                 const token = window.sessionStorage.getItem('authToken')
-                const user = jwtDecode(token)
-                const response = await axios.get(`https://fish-demo.onrender.com/purchase/returnItem/${user.user_id}`)
-                console.log(response.data);
-                setListHistory(response.data);
+                if (token) {
+                    const user = jwtDecode(token)
+                    const response = await axios.get(`https://fish-demo.onrender.com/purchase/returnItem/${user.user_id}`)
+                    console.log(response.data);
+                    setListHistory(response.data);
+                }
+                else {
+                    sessionStorage.setItem('previousPage', '/order-history')
+                    navigate('/login')
+                }
+
             } catch (error) {
                 console.log(error)
             }
@@ -37,8 +47,8 @@ function HistoryPage() {
                 <>
                     <Container>
                         <Grid container spacing={1} sx={{ p: 4 }} >
-                            <Grid item xs = {12} md ={12} sx ={{display: 'flex', alignItems: 'center', justifyContent: 'center', m:1}}>
-                                <Typography variant='h5' sx = {{fontWeight: 'bold'}}>
+                            <Grid item xs={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', m: 1 }}>
+                                <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
                                     History Purchase
                                 </Typography>
                             </Grid>

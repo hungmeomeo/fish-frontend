@@ -11,7 +11,7 @@ import LOGO from "../../assets/img/footerIcon.svg";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#222222] px-4">
+    <footer className="bg-[#222222] px-4 ">
       <div className="max-w-[75rem] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 pt-[48px] pb-[32px]">
           <div className="flex flex-col items-start">

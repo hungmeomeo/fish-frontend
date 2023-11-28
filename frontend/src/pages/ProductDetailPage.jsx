@@ -80,7 +80,7 @@ export default function ProductDetailPage() {
             navigate('/check-out')
         }
         else {
-            sessionStorage.setItem('checkOutPage', '/check-out')
+            sessionStorage.setItem('previousPage', '/check-out')
             navigate('/login')
         }
     }

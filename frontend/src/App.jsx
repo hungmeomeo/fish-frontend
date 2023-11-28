@@ -21,8 +21,8 @@ function App() {
 
     <Router>
       <ScrollToTop>
-      <Routes>
-        
+        <Routes>
+
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -34,13 +34,13 @@ function App() {
             <Route path="/check-out" element={<CheckOutPage />} />
             <Route path="/shipping-cost" element={<ShippingCost />} />
             <Route path="/guarantee" element={<Guarantee />} />
-            <Route path="/products/search" element={<SearchPage />} />
+            <Route path="/products/search/:searchid" element={<SearchPage />} />
             <Route path="/order-history" element={<HistoryPage />} />
-            <Route path="/404" element={<MissingPage />} />
+            <Route path="*" element={<MissingPage />} />
           </Route>
-        
-        {/* Add another pages here */}
-      </Routes >
+
+          {/* Add another pages here */}
+        </Routes >
       </ScrollToTop>
     </Router >
   );

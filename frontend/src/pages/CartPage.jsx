@@ -106,7 +106,7 @@ function CartPage() {
     }
     else {
       // Redirect to the login page
-      sessionStorage.setItem('checkOutPage', '/check-out')
+      sessionStorage.setItem('previousPage', '/check-out')
       navigate("/login");
     }
   };

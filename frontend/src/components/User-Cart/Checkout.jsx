@@ -32,12 +32,14 @@ const Checkout = () => {
   const [payClick, setPayClick] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  // const cart = useSelector(state => state.cart);
+  
+  
+
+  // get cart
   const cart = JSON.parse(window.sessionStorage.getItem('cart'))
+
   console.log('cart', cart)
-  // const data = location.state.data;
-  // const quantity = location.state.quantity;
-  // console.log('hello', location.state.data);
+
   const handleName = (event) => {
     setName(event.target.value)
   }

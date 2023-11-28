@@ -10,10 +10,10 @@ export default function LoginPage() {
   useEffect(() => {
     let token = sessionStorage.getItem("authToken");
     if (token) {
-      const checkoutpage = sessionStorage.getItem('checkOutPage');
-      if (checkoutpage){
-        sessionStorage.removeItem('checkOutpage');
-        navigate(checkoutpage)
+      const previousPage = sessionStorage.getItem('previousPage');
+      if (previousPage){
+        sessionStorage.removeItem('previousPage');
+        navigate(previousPage)
       }
       else{
         navigate("/");

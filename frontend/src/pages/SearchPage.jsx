@@ -1,11 +1,12 @@
 import { Grid, Typography, Box, Card, CardMedia, CardContent, CardActions, Container, Button, Divider } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import AppPagination from '../components/Pagnigation/AppPagination';
 
 
 function SearchPage() {
     const [productSearch, setProductSearch] = useState([]);
+    const { searchid } = useParams();
     const location = useLocation();
     console.log('location', location.state)
     const searchResutl = location.state.data
@@ -13,7 +14,7 @@ function SearchPage() {
         console.log('idinlist', id);
         navigate(`/products/${id}`)
     }
-    
+
     return (
         <Container>
             <Grid container spacing={2}>
@@ -21,25 +22,27 @@ function SearchPage() {
                     <Typography variant='h3'>
                         Search
                     </Typography>
-                    
+
                 </Grid>
-                
+
                 {searchResutl.length > 0 ? (
                     <>
                         {searchResutl.map((product) => (
-                            <Grid item key={product.id} xs={2} sm={4} md={4} sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", margin: 0 }}>
+                            <Grid item key={product.id} xs={2} sm={4} md={3} sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", margin: 0 }}>
                                 <Box sx={{
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
                                     flexDirection: "column",
                                     position: "relative",
-                                    width: "80%"
+                                    width: "90%"
                                 }}>
                                     <Card >
                                         <CardMedia
                                             component="img"
-
+                                            sx={{
+                                                height: '300px',
+                                            }}
                                             image={product.image}
                                         />
                                         <CardContent>
