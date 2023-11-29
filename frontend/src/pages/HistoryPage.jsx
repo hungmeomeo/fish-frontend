@@ -49,7 +49,7 @@ function HistoryPage() {
                         <Grid container spacing={1} sx={{ p: 4 }} >
                             <Grid item xs={12} md={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', m: 1 }}>
                                 <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-                                    History Purchase
+                                    Lịch sử Mua hàng
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={8}>
@@ -77,7 +77,7 @@ function HistoryPage() {
                                                     </Box>
                                                     <Box sx={{ m: 1 }}>
                                                         <Typography variant="h6">
-                                                            Quantity: {item.so_luong}
+                                                            Số lượng: {item.so_luong}
                                                         </Typography>
                                                     </Box>
                                                     <Box sx={{ m: 1 }}>

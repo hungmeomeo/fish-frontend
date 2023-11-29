@@ -20,7 +20,7 @@ function SearchPage() {
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Typography variant='h3'>
-                        Search
+                        Tìm kiếm
                     </Typography>
 
                 </Grid>
@@ -57,7 +57,7 @@ function SearchPage() {
                                         </CardContent>
                                         <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}   >
                                             <Button variant='contained' onClick={() => handleView(product.id)}>
-                                                View
+                                                Xem
                                             </Button>
 
                                         </CardActions>
@@ -70,7 +70,7 @@ function SearchPage() {
                     <>
                         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Typography variant='h6' >
-                                Can't find any information
+                                Không tìm thấy sản phẩm
                             </Typography>
                         </Grid>
                     </>

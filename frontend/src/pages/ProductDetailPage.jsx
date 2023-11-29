@@ -148,7 +148,7 @@ export default function ProductDetailPage() {
                                                         backgroundColor: "#f44336",
                                                     }
                                                 }}>
-                                                    Buy Now
+                                                    Mua ngay
                                                 </Button>
                                             </Grid>
                                         </Box>

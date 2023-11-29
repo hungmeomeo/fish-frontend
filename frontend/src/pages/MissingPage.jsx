@@ -24,7 +24,7 @@ export default function MissingPage() {
           color: "black",
         }}
       >
-        Opps! Page Not Found
+        Trang không tồn tại.
       </Typography>
 
       <Box
@@ -47,7 +47,7 @@ export default function MissingPage() {
           width: '35%'
         }}
       >
-        We are sorry, but the page you requested was not found
+        Xin lỗi, trang bạn đang tìm kiếm không tồn tại.
       </Typography>
     </Box>
   )
