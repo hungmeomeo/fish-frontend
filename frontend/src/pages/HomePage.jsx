@@ -35,9 +35,8 @@ const HomePage = () => {
   const [sort, setSort] = useState("");
   const [product, setProduct] = useState([]);
   const navigate = useNavigate();
-  const handleView = (id) => {
-    console.log("idinlist", id);
-    navigate(`/products/${id}`);
+  const handleView = (id, cato) => {
+    navigate(`/products/${cato}/${id}`);
   };
   useEffect(() => {
     async function getProduct() {
@@ -141,7 +140,7 @@ const HomePage = () => {
                         >
                           <Button
                             variant="contained"
-                            onClick={() => handleView(product.id)}
+                            onClick={() => handleView(product.id, product.cato)}
                           >
                             Xem
                           </Button>
