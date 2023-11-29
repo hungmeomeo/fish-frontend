@@ -73,25 +73,25 @@ const Checkout = () => {
     e.preventDefault();
     console.log('startsubmit')
     
-      if (!validName && (name === "")) {
+      if (!validName || (name === "")) {
         setValidName(false)
       }
-      if (!validPhone && (phone === "")) {
+      if (!validPhone || (phone === "")) {
         setValidPhone(false)
       }
-      if (!validAddress && (address === "")) {
+      if (!validAddress || (address === "")) {
         setValidAddress(false)
       }
-      if (!validCard && (cardNumber === "")) {
+      if (!validCard || (cardNumber === "")) {
         setValidCard(false)
       }
-      if (!validDate && (date === "")) {
+      if (!validDate || (date === "")) {
         setValidDate(false)
       }
-      if (!validCvv && (cvvNumber === "")) {
+      if (!validCvv || (cvvNumber === "")) {
         setValidCvv(false)
       }
-      if (!validNameCard && (nameCard === "")) {
+      if (!validNameCard || (nameCard === "")) {
         setValidNameCard(false)
       }
       if (validName && name !== "" && validPhone && phone !== "" && validAddress && address !== ""
