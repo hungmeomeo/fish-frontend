@@ -91,7 +91,7 @@ export default function ProductDetailPage() {
                     <>
                         <Grid container spacing={1}>
                             <Grid item xs={12} md={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginLeft: 4 }}>
-                                <Link href="/home" underline='none'>
+                                <Link href="/" underline='none'>
                                     Home
                                 </Link>
                                 <KeyboardArrowRightIcon sx={{}} />
