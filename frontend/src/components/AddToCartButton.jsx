@@ -31,7 +31,7 @@ function AddToCartButton(props) {
     else {
       setCookie("productid", ID)
     }
-    toast.success('You added successfully.', {
+    toast.success('Đã thêm vào giỏ hàng', {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
