@@ -142,7 +142,7 @@ const Checkout = () => {
         <Grid item xs={12} md={5} >
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', m: 1 }}>
             <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-              Order Summary
+              Tổng kết đơn hàng
             </Typography>
           </Grid>
           {cart.map((item) => (
@@ -167,7 +167,7 @@ const Checkout = () => {
                 </Box>
                 <Box sx={{ m: 1 }}>
                   <Typography variant="h6">
-                    Quantity: {item.so_luong}
+                    Số lượng: {item.so_luong}
                   </Typography>
                 </Box>
                 <Box sx={{ m: 1 }}>
@@ -182,21 +182,21 @@ const Checkout = () => {
         <Grid item xs={12} md={6} >
           <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-              Billing Information
+              Thông tin đơn hàng
             </Typography>
           </Grid>
           <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
             <Paper sx={{ display: 'flex', flexDirection: 'column', boxShadow: 10 }}>
               <Grid container spacing={1} sx={{ m: 1 }}>
                 <Grid item xs={5} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                  Subtotal
+                  Tiền sản phẩm
                 </Grid>
 
                 <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   ${totalBill}
                 </Grid>
                 <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                  Shipping
+                  Phí giao hàng
                 </Grid>
                 <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   $4.99
@@ -205,10 +205,10 @@ const Checkout = () => {
               <Divider sx={{ borderborderColor: 'divider', marginX: 1 }} />
               <Grid container spacing={1} sx={{ m: 1 }}>
                 <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Total </Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Tổng cộng </Typography>
                 </Grid>
                 <Grid item xs={6} md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  ${(totalBill + 4.99).toFixed(2)} USD (including VAT)
+                  ${(totalBill + 4.99).toFixed(2)} USD (bao gồm VAT)
                 </Grid>
               </Grid>
             </Paper>
@@ -217,12 +217,12 @@ const Checkout = () => {
             <Grid container spacing={1} sx={{ marginTop: 3 }}>
               <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start' }} >
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                  Personal Information
+                  Thông tin cá nhân
                 </Typography>
               </Grid>
               <Grid item xs={12} md={6} >
                 <TextField
-                  placeholder='Name'
+                  placeholder='Tên'
                   type='text'
                   fullWidth
                   value={name}
@@ -232,7 +232,7 @@ const Checkout = () => {
               </Grid>
               <Grid item xs={12} md={6} >
                 <TextField
-                  placeholder='Phone Number'
+                  placeholder='Số điện thoại'
                   type='text'
                   fullWidth
                   value={phone}
@@ -242,7 +242,7 @@ const Checkout = () => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <TextField
-                  placeholder='Address'
+                  placeholder='Địa chỉ'
                   type='text'
                   fullWidth
                   value={address}
@@ -254,7 +254,7 @@ const Checkout = () => {
               <Divider sx={{ marginY: 1, borderborderColor: 'divider' }} />
               <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: 1 }} >
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                  Payment Information
+                  Thông tin tài khoản
                 </Typography>
               </Grid>
               <Grid item xs={12} md={12}  >
@@ -301,7 +301,7 @@ const Checkout = () => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <LoadingButton loading={loading} type="submit" size='large'  fullWidth variant='contained' sx={{ backgroundColor: '#1773b0' }}>
-                  Pay Now
+                  Thanh toán 
                 </LoadingButton>
               </Grid>
             </Grid>

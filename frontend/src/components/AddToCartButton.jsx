@@ -46,7 +46,7 @@ function AddToCartButton(props) {
   return (
     <>
       <Button onClick={() => handleAdd(props.productid)} variant = 'outlined' sx = {{width: '50%'}}>
-        Add to cart
+        Thêm vào giỏ hàng
       </Button>
       <ToastContainer
         position="top-center"
