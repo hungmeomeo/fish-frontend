@@ -115,7 +115,7 @@ function CartPage() {
       <div className="flex-grow">
         <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
         {cartItems.length === 0 ? (
-          <p className="text-center text-gray-700">Your cart is empty.</p>
+          <p className="text-center text-gray-700">Giỏ hàng của bạn đang trống.</p>
         ) : (
           <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
             <div className="rounded-lg md:w-2/3">
